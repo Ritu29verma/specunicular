@@ -1,0 +1,32 @@
+import React, {useState}from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import DoctorRegistrationForm from './pages/DoctorRegistrationPage';
+import HospitalRegistrationForm from './pages/HospitalRegistrationPage';
+import HospitalProfile from './pages/HospitalInfoPage';
+import AdminPage from './pages/AdminPage';
+import AdminLoginPage from './pages/AdminLoginPage';
+import { Navigate } from 'react-router-dom';
+
+
+
+const App = () => {
+  const [isAdminAuthenticated, setAdminAuthenticated] = useState(false);
+ 
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/doctor-registration" element={<DoctorRegistrationForm />} />
+        <Route path="/hospital-registration" element={<HospitalRegistrationForm />} />
+        <Route path="/hospital-profile" element={<HospitalProfile />} />
+        <Route path="/admin-login" element={<AdminLoginPage setAdminAuthenticated={setAdminAuthenticated} />} />
+        <Route path="/admin" element={isAdminAuthenticated ? <AdminPage /> : <Navigate to="/admin-login" />} />
+
+      </Routes>
+      </Router>
+  )
+}
+
+export default App
