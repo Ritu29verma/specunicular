@@ -132,3 +132,19 @@ export const approveDoctor = async (req, res) => {
     res.status(500).json({ message: 'Error approving doctor', error: error.message });
   }
 };
+
+export const getDoctorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doctor = await Doctor.findById(id);
+
+    if (!doctor) {
+      return res.status(404).json({ message: 'Doctor not found' });
+    }
+
+    res.json(doctor);
+  } catch (error) {
+    console.error('Error fetching doctor:', error);
+    res.status(500).json({ message: 'Error fetching doctor', error: error.message });
+  }
+};

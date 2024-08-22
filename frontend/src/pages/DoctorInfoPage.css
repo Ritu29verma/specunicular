@@ -1,0 +1,60 @@
+.doctor-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .doctor-info-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .doctor-info-card h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .doctor-info-card p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .doctor-info-card h3 {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+  
+  .doctor-info-images {
+    margin-top: 20px;
+  }
+  
+  .proof-images {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .proof-image {
+    text-align: center;
+    margin: 10px;
+    flex: 1 1 30%;
+  }
+  
+  .proof-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .proof-image p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  

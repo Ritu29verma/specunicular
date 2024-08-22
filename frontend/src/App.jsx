@@ -6,6 +6,8 @@ import HospitalRegistrationForm from './pages/HospitalRegistrationPage';
 import HospitalProfile from './pages/HospitalInfoPage';
 import AdminPage from './pages/AdminPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import DoctorInfo from './pages/DoctorInfoPage';
+import HospitalInfo from './pages/HospitalInfoPage';
 import { Navigate } from 'react-router-dom';
 
 
@@ -23,6 +25,10 @@ const App = () => {
         <Route path="/hospital-profile" element={<HospitalProfile />} />
         <Route path="/admin-login" element={<AdminLoginPage setAdminAuthenticated={setAdminAuthenticated} />} />
         <Route path="/admin" element={isAdminAuthenticated ? <AdminPage /> : <Navigate to="/admin-login" />} />
+        <Route path="/doctor/:doctorId" element={<DoctorInfo />} />
+        <Route path="/hospitals/:id" element={<HospitalInfo />} />
+
+
 
       </Routes>
       </Router>
