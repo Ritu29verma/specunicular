@@ -3,10 +3,12 @@ import nodemailer from 'nodemailer';
 
 // Create a transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // You can use other services like 'hotmail', 'yahoo', etc.
+  host: 'smtp.gmail.com', // Replace with your SMTP host
+  port: 587, // or 465 for secure connections
+  secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER, // Your email address
-    pass: process.env.EMAIL_PASS, // Your email password
+    user: 'uv84690@gmail.com', // Your email
+    pass: 'lvwpefogwgqfxiox', // Your email password
   },
 });
 

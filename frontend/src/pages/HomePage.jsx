@@ -1,10 +1,40 @@
 import React from 'react';
-import { Link ,  useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
+
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import DoctorCard from '../components/DoctorCard';
+import HospitalCard from '../components/HospitalCard';
+import './HomePage.css'; // Add styling if needed
 
 const HomePage = () => {
-  const navigate = useNavigate();
+
+  const [doctors, setDoctors] = useState([]);
+  const [hospitals, setHospitals] = useState([]);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/doctors/all');
+        setDoctors(response.data);
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+      }
+    };
+
+    const fetchHospitals = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/hospitals/all-hospitals');
+        setHospitals(response.data);
+      } catch (error) {
+        console.error('Error fetching hospitals:', error);
+      }
+    };
+
+    fetchDoctors();
+    fetchHospitals();
+  }, []);
+
 
   return (
     // <div className="home-page">
@@ -83,6 +113,23 @@ className="bg-white shadow-xl rounded-lg p-8 m-4 w-full md:w-2/5 cursor-pointer 
         </div>
         
       </div>
+
+      <div className="homepage">
+      <h2>Doctors</h2>
+      <div className="doctor-list">
+        {doctors.map((doctor) => (
+          <DoctorCard key={doctor._id} doctor={doctor} />
+        ))}
+      </div>
+
+      <h2>Hospitals</h2>
+      <div className="hospital-list">
+        {hospitals.map((hospital) => (
+          <HospitalCard key={hospital._id} hospital={hospital} />
+        ))}
+      </div>
+    </div>
+  
     </div>
     <Footer />
   </div>

@@ -63,4 +63,40 @@ export const getAllHospitals = async (req, res) => {
   }
 };
 
+export const getHospitalById = async (req, res) => {
+  try {
+    const hospitalId = req.params.id;
+    const hospital = await Hospital.findById(hospitalId).populate('doctors');
+
+    if (!hospital) {
+      return res.status(404).json({ message: 'Hospital not found' });
+    }
+
+    res.json(hospital);
+  } catch (error) {
+    console.error('Error fetching hospital:', error);
+    res.status(500).json({ message: 'Error fetching hospital', error: error.message });
+  }
+};
+
+
+export const approveHospital = async (req, res) => {
+  try {
+    const { hospitalId } = req.params;
+
+    const hospital = await Hospital.findById(hospitalId);
+    if (!hospital) {
+      return res.status(404).json({ message: 'Hospital not found' });
+    }
+
+    hospital.isApproved = true;
+    await hospital.save();
+
+    res.status(200).json({ message: 'Hospital approved successfully!' });
+  } catch (error) {
+    console.error('Error approving hospital:', error);
+    res.status(500).json({ message: 'Error approving hospital', error: error.message });
+  }
+};
+
 export default router;

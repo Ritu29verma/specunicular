@@ -3,6 +3,58 @@ import ProgressBar from '../ProgressBar';
 import Navbar from '../Navbar';
 
 const Step3 = ({ formData, handleChange, handleNext, handlePrev, hospitals }) => (
+   // const [states, setStates] = useState([]);
+    // const [cities, setCities] = useState([]);
+    
+    // const [selectedState, setSelectedState] = useState('');
+    // const [selectedCity, setSelectedCity] = useState('');
+    
+    // useEffect(() => {
+    //   const getStates = async () => {
+    //     try {
+    //       const result = await csc.getStatesOfCountry(selectedCountry);
+    //       let allStates = [];
+    //       allStates = result?.map(({ isoCode, name }) => ({
+    //         isoCode,
+    //         name
+    //       }));
+    //       const [{ isoCode: firstState = '' } = {}] = allStates;
+    //       setCities([]);
+    //       setSelectedCity('');
+    //       setStates(allStates);
+    //       setSelectedState(firstState);
+    //     } catch (error) {
+    //       setStates([]);
+    //       setCities([]);
+    //       setSelectedCity('');
+    //     }
+    //   };
+  
+    //   getStates();
+    // }, []);
+  
+    // useEffect(() => {
+    //   const getCities = async () => {
+    //     try {
+    //       const result = await csc.getCitiesOfState(
+    //         selectedCountry,
+    //         selectedState
+    //       );
+    //       let allCities = [];
+    //       allCities = result?.map(({ name }) => ({
+    //         name
+    //       }));
+    //       const [{ name: firstCity = '' } = {}] = allCities;
+    //       setCities(allCities);
+    //       setSelectedCity(firstCity);
+    //     } catch (error) {
+    //       setCities([]);
+    //     }
+    //   };
+  
+    //   getCities();
+    // }, [selectedState]);
+
   <div className="w-full h-screen bg-lightGreen rounded-lg shadow-md">
     <Navbar showLogin={false} showLogout={false} showOther={false} />
     <ProgressBar step={3} totalSteps={8} />

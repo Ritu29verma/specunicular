@@ -28,8 +28,8 @@ export const registerDoctor = async (req, res) => {
       return res.status(400).json({ message: 'Email is required' });
     }
 
-    if (!hospitalId || !mongoose.Types.ObjectId.isValid(hospitalId)) {
-      return res.status(400).json({ message: 'Invalid Hospital ID' });
+    if (!hospitalId) {
+      return res.status(400).json({ message: ' Hospital ID is required' });
     }
 
     // Handle file uploads
@@ -39,7 +39,7 @@ export const registerDoctor = async (req, res) => {
 
     // Create new doctor record
     const doctor = new Doctor({
-      hospitalId: mongoose.Types.ObjectId(hospitalId),
+      hospitalId,
       registrationNo,
       registrationCouncil,
       registrationYear,
@@ -61,10 +61,16 @@ export const registerDoctor = async (req, res) => {
     // Save doctor to database
     await doctor.save();
 
-    await Hospital.findByIdAndUpdate(
-      mongoose.Types.ObjectId(hospitalId), // Ensure hospitalId is a valid ObjectId
-      { $push: { doctors: doctor._id } }
+    const updatedHospital = await Hospital.findOneAndUpdate(
+      { hospitalId: hospitalId }, // Use hospitalId as part of the filter object
+      { $push: { doctors: doctor } }, // Push the entire doctor data object
+      { new: true, upsert: true } // Optionally return the updated document and create a new document if none exists
     );
+
+    if (!updatedHospital) {
+      return res.status(404).json({ message: 'Hospital not found' });
+    }
+
 
     res.status(201).json({ message: 'Doctor registered successfully!' });
   } catch (error) {
@@ -124,5 +130,21 @@ export const approveDoctor = async (req, res) => {
   } catch (error) {
     console.error('Error approving doctor:', error);
     res.status(500).json({ message: 'Error approving doctor', error: error.message });
+  }
+};
+
+export const getDoctorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doctor = await Doctor.findById(id);
+
+    if (!doctor) {
+      return res.status(404).json({ message: 'Doctor not found' });
+    }
+
+    res.json(doctor);
+  } catch (error) {
+    console.error('Error fetching doctor:', error);
+    res.status(500).json({ message: 'Error fetching doctor', error: error.message });
   }
 };
