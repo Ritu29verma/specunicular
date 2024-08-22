@@ -108,7 +108,7 @@ const DoctorRegistrationForm = () => {
 
   return (
     <div className="doctor-registration-form">
-      <h2>Doctor Registration</h2>
+      <h2> </h2>
       <form onSubmit={handleSubmit}>
        
         {step === 1 && (
