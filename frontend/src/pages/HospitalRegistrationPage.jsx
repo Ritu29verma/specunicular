@@ -59,6 +59,15 @@ const HospitalRegistrationForm = () => {
       timings: [...formData.timings, { day: '', startTime: '', endTime: '' }]
     });
   };
+  // handle remove time slotes
+  const handleRemoveTimingSlot = (index) => {
+    const newTimings = [...formData.timings];
+    newTimings.splice(index, 1);
+    setFormData({
+      ...formData,
+      timings: newTimings
+    })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +101,7 @@ const HospitalRegistrationForm = () => {
         {step === 2 && <Step2 formData={formData} handleChange={handleChange} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
         {step === 3 && <Step3 formData={formData} handleChange={handleChange} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
         {step === 4 && <Step4 formData={formData} handleChange={handleChange} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
-        {step === 5 && <Step5 formData={formData} handleTimingChange={handleTimingChange} handleAddTimingSlot={handleAddTimingSlot} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
+        {step === 5 && <Step5 formData={formData} handleTimingChange={handleTimingChange} handleAddTimingSlot={handleAddTimingSlot} handleRemoveTimingSlot={handleRemoveTimingSlot} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
         {step === 6 && <Step6 formData={formData} handleChange={handleChange} handleNext={() => setStep(step + 1)} handlePrev={() => setStep(step - 1)} />}
         {step === 7 && <Step7 formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} handlePrev={() => setStep(step - 1)} />}
       </form>

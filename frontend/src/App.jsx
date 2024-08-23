@@ -1,5 +1,5 @@
-import React, {useState}from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import DoctorRegistrationForm from './pages/DoctorRegistrationPage';
 import HospitalRegistrationForm from './pages/HospitalRegistrationPage';
@@ -8,13 +8,11 @@ import AdminPage from './pages/AdminPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import DoctorInfo from './pages/DoctorInfoPage';
 import HospitalInfo from './pages/HospitalInfoPage';
-import { Navigate } from 'react-router-dom';
-import MultiStepForm from './components/MultiStepform';
+import SearchResults from './pages/SearchResult';
 
 
 const App = () => {
   const [isAdminAuthenticated, setAdminAuthenticated] = useState(false);
- 
 
   return (
     <Router>
@@ -27,12 +25,12 @@ const App = () => {
         <Route path="/admin" element={isAdminAuthenticated ? <AdminPage /> : <Navigate to="/admin-login" />} />
         <Route path="/doctor/:doctorId" element={<DoctorInfo />} />
         <Route path="/hospitals/:id" element={<HospitalInfo />} />
-
-
-
+        <Route path="/search" element={<SearchResults />} />
+        {/* Redirect to homepage if no matching route */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      </Router>
-  )
-}
+    </Router>
+  );
+};
 
-export default App
+export default App;

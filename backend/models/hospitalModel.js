@@ -22,6 +22,7 @@ const doctorSchema = new mongoose.Schema({
   experience: { type: String, required: true },
   establishmentName: { type: String, required: true },
   city: { type: String, required: true },
+  state: { type: String, required: true },
   locality: { type: String, required: true },
   identityProof: { type: String, required: true },
   medicalRegistrationProof: { type: String, required: true },

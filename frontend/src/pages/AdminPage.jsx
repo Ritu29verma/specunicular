@@ -13,7 +13,7 @@ const AdminPage = () => {
       } catch (error) {
         console.error('Error fetching doctors:', error);
       }
-    }
+    };
     const fetchHospitals = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/hospitals/all-hospitals');
@@ -37,16 +37,6 @@ const AdminPage = () => {
       console.error('Error approving doctor:', error);
     }
   };
-  // const handleApproveHospitals = async (hospitalId) => {
-  //   try {
-  //     await axios.post(`http://localhost:5000/api/hospitals/${hospitalId}/approve`);
-  //     setHospitals(hospitals.map(hospital =>
-  //       hospital._id === hospitalId ? { ...hospital, isApproved: true } : hospital
-  //     ));
-  //   } catch (error) {
-  //     console.error('Error approving hospital:', error);
-  //   }
-  // };
 
   const formatTimingSlots = (slots) => {
     return slots.map((slot, index) => (
@@ -57,98 +47,66 @@ const AdminPage = () => {
   };
 
   return (
-    <div>
-      <h1>Admin Page</h1>
-      <h2>All Registered Doctor</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Registration No</th>
-            <th>Name</th>
-            <th>City</th>
-            <th>Specialization</th>
-            <th>Timing Slots</th>
-            <th>Consultancy Fees</th>
-            <th>Identity Proof</th>
-            <th>Medical Registration Proof</th>
-            <th>Establishment Proof</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {doctors.map(doctor => (
-            <tr key={doctor._id}>
-              <td>{doctor.registrationNo}</td>
-              <td>{doctor.doctorName}</td>
-              <td>{doctor.city}</td>
-              <td>{doctor.specialization}</td>
-              <td>{formatTimingSlots(doctor.timingSlots)}</td>
-              <td>{doctor.consultancyFees}</td>
-              <td>
-                <a href={doctor.identityProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                <a href={doctor.medicalRegistrationProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                <a href={doctor.establishmentProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                {!doctor.isApproved ? (
-                  <button onClick={() => handleApprove(doctor._id)}>Approve</button>
-                ) : (
-                  "Approved"
-                )}
-              </td>
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+      
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Registered Doctors</h2>
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+          <thead>
+            <tr className="bg-gray-200 text-gray-700">
+              <th className="py-2 px-4 border-b">Registration No</th>
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">City</th>
+              <th className="py-2 px-4 border-b">Specialization</th>
+              <th className="py-2 px-4 border-b">Timing Slots</th>
+              <th className="py-2 px-4 border-b">Consultancy Fees</th>
+              <th className="py-2 px-4 border-b">Identity Proof</th>
+              <th className="py-2 px-4 border-b">Medical Registration Proof</th>
+              <th className="py-2 px-4 border-b">Establishment Proof</th>
+              <th className="py-2 px-4 border-b">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <h2>All Hospitals</h2>
-      {/* <table>
-        <thead>
-          <tr>
-            <th>Registration No</th>
-            <th>Name</th>
-            <th>City</th>
-            <th>Specialization</th>
-            <th>Timing Slots</th>
-            <th>Consultancy Fees</th>
-            <th>Identity Proof</th>
-            <th>Medical Registration Proof</th>
-            <th>Establishment Proof</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {doctors.map(doctor => (
-            <tr key={doctor._id}>
-              <td>{doctor.registrationNo}</td>
-              <td>{doctor.doctorName}</td>
-              <td>{doctor.city}</td>
-              <td>{doctor.specialization}</td>
-              <td>{formatTimingSlots(doctor.timingSlots)}</td>
-              <td>{doctor.consultancyFees}</td>
-              <td>
-                <a href={doctor.identityProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                <a href={doctor.medicalRegistrationProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                <a href={doctor.establishmentProof} target="_blank" rel="noopener noreferrer">View Image</a>
-              </td>
-              <td>
-                {!doctor.isApproved ? (
-                  <button onClick={() => handleApprove(doctor._id)}>Approve</button>
-                ) : (
-                  "Approved"
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+          </thead>
+          <tbody>
+            {doctors.map(doctor => (
+              <tr key={doctor._id} className="hover:bg-gray-100">
+                <td className="py-2 px-4 border-b">{doctor.registrationNo}</td>
+                <td className="py-2 px-4 border-b">{doctor.doctorName}</td>
+                <td className="py-2 px-4 border-b">{doctor.city}</td>
+                <td className="py-2 px-4 border-b">{doctor.specialization}</td>
+                <td className="py-2 px-4 border-b">{formatTimingSlots(doctor.timingSlots)}</td>
+                <td className="py-2 px-4 border-b">{doctor.consultancyFees}</td>
+                <td className="py-2 px-4 border-b">
+                  <a href={doctor.identityProof} target="_blank" rel="noopener noreferrer" className="text-blue-500">View Image</a>
+                </td>
+                <td className="py-2 px-4 border-b">
+                  <a href={doctor.medicalRegistrationProof} target="_blank" rel="noopener noreferrer" className="text-blue-500">View Image</a>
+                </td>
+                <td className="py-2 px-4 border-b">
+                  <a href={doctor.establishmentProof} target="_blank" rel="noopener noreferrer" className="text-blue-500">View Image</a>
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {!doctor.isApproved ? (
+                    <button 
+                      onClick={() => handleApprove(doctor._id)}
+                      className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
+                    >
+                      Approve
+                    </button>
+                  ) : (
+                    <span className="text-green-500">Approved</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div>
+        <h2 className="text-2xl font-semibold mb-4">Registered Hospitals</h2>
+        {/* Table or list for hospitals can be added similarly */}
+      </div>
     </div>
   );
 };

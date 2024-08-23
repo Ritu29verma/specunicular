@@ -2,10 +2,7 @@
 import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema({
-  // doctorName: {type:String,required: true},
-  // doctorSpecialty: {type:String,required: true},
-  // doctorPhoneNo: {type:String,required: true},
-  // doctorEmail: {type:String,required: true},
+
   email: {
     type: String,
     required: true, // Ensure the email field is required
