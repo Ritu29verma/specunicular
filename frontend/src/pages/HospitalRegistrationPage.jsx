@@ -74,6 +74,7 @@ const HospitalRegistrationForm = () => {
     try {
       await axios.post('http://localhost:5000/api/hospitals/register-hospital', dataToSubmit);
       alert('Hospital registered successfully!');
+      window.location.href = "/";
     } catch (err) {
       setError('Failed to register hospital: ' + err.response?.data?.message || err.message);
     } finally {

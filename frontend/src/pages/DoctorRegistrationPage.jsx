@@ -99,7 +99,13 @@ const DoctorRegistrationForm = () => {
           },
         }
       );
-      alert("Doctor registered successfully!");
+      // create a alert message upon succesfull registration
+      alert("Registration successful");
+      // redirect to login page
+    w
+
+      
+      
     } catch (error) {
       console.error("Error registering doctor:", error);
       alert("An error occurred while registering the doctor.");

@@ -10,13 +10,13 @@ const Step5 = ({ handleChange, handleNext, handlePrev }) => (
     
     <div className="space-y-4 text-left w-full max-w-md">
         <div>
-          <label htmlFor="MedicalProof" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="medicalRegistrationProof" className="block text-sm font-medium text-gray-700 mb-2">
            Upload Medical Registration Proof
           </label>
           <input
             type="file"
-            id="MedicalProof"
-            name="MedicalProof"
+            id="medicalRegistrationProof"
+            name="medicalRegistrationProof"
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"

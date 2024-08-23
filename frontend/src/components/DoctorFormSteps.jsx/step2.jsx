@@ -28,7 +28,7 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
       </div>
 
       <div>
-        <label htmlFor="college" className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Select Your College
         </label>
         <select
