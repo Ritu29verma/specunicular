@@ -1,6 +1,7 @@
-import React from 'react';
-import ProgressBar from '../ProgressBar';
-import Navbar from '../Navbar';
+import React from "react";
+import ProgressBar from "../ProgressBar";
+import Navbar from "../Navbar";
+import {doctorCouncils} from '../../utils/councils.js'; // Import the councils array
 
 const Step1 = ({ formData, handleChange, handleNext }) => (
   <div className="w-full h-screen bg-lightGreen rounded-lg shadow-md">
@@ -12,8 +13,11 @@ const Step1 = ({ formData, handleChange, handleNext }) => (
 
     <div className="space-y-4 text-left w-1/3 p-6">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-         Enter Your Email
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Enter Your Email
         </label>
         <input
           type="email"
@@ -28,8 +32,11 @@ const Step1 = ({ formData, handleChange, handleNext }) => (
       </div>
 
       <div>
-        <label htmlFor="registrationNo" className="block text-sm font-medium text-gray-700 mb-2">
-        Enter Your Registration No
+        <label
+          htmlFor="registrationNo"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Enter Your Registration No
         </label>
         <input
           type="text"
@@ -44,8 +51,11 @@ const Step1 = ({ formData, handleChange, handleNext }) => (
       </div>
 
       <div>
-        <label htmlFor="registrationCouncil" className="block text-sm font-medium text-gray-700 mb-2">
-        Enter Your Registration Council
+        <label
+          htmlFor="registrationCouncil"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Select Your Registration Council
         </label>
         <select
           id="registrationCouncil"
@@ -56,14 +66,20 @@ const Step1 = ({ formData, handleChange, handleNext }) => (
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
         >
           <option value="">Select Registration Council</option>
-          <option value="Council1">Council1</option>
-          <option value="Council2">Council2</option>
+          {doctorCouncils.map((council, index) => (
+            <option key={index} value={council}>
+              {council}
+            </option>
+          ))}
         </select>
       </div>
 
       <div>
-        <label htmlFor="registrationYear" className="block text-sm font-medium text-gray-700 mb-2">
-        Enter Your Registration Year
+        <label
+          htmlFor="registrationYear"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Enter Your Registration Year
         </label>
         <input
           type="text"

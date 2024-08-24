@@ -1,6 +1,8 @@
 import React from 'react';
 import ProgressBar from '../ProgressBar';
 import Navbar from '../Navbar';
+import { doctorColleges } from '../../utils/doctorColleges.js';
+import { doctorDegrees } from '../../utils/doctorDegrees.js';
 
 const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
   <div className="w-full h-screen bg-lightGreen rounded-lg shadow-md">
@@ -12,23 +14,34 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
 
     <div className="space-y-4 text-left w-1/3 p-6">
       <div>
-        <label htmlFor="degree" className="block text-sm font-medium text-gray-700 mb-2">
-        Enter Your Degree
+        <label
+          htmlFor="degree"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Select Your Degree
         </label>
-        <input
-          type="text"
+        <select
           id="degree"
           name="degree"
-          placeholder="Degree"
           value={formData.degree}
           onChange={handleChange}
           required
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-        />
+        >
+          <option value="">Select Degree</option>
+          {doctorDegrees.map((degree, index) => (
+            <option key={index} value={degree}>
+              {degree}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="college"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Select Your College
         </label>
         <select
@@ -39,22 +52,28 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
           required
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
         >
-          <option value="">Select College</option>
-          <option value="College1">College1</option>
-          <option value="College2">College2</option>
-          {/* Add more colleges as needed */}
+          <option value="" disable>Select College</option>
+          {doctorColleges.map((college, index) => (
+            <option key={index} value={college}>
+              {college}
+            </option>
+          ))}
         </select>
       </div>
 
+      {/* New Input Fields */}
       <div>
-        <label htmlFor="completionYear" className="block text-sm font-medium text-gray-700 mb-2">
-         Enter your Year of Completion
+        <label
+          htmlFor="completionYear"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Enter Completion Year
         </label>
         <input
           type="text"
           id="completionYear"
           name="completionYear"
-          placeholder="Year of Completion"
+          placeholder="Completion Year"
           value={formData.completionYear}
           onChange={handleChange}
           required
@@ -63,14 +82,17 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
       </div>
 
       <div>
-        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
-         Enter Your Years of Experience
+        <label
+          htmlFor="experience"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Enter Experience (in years)
         </label>
         <input
-          type="text"
+          type="number"
           id="experience"
           name="experience"
-          placeholder="Years of Experience"
+          placeholder="Experience (in years)"
           value={formData.experience}
           onChange={handleChange}
           required
@@ -92,7 +114,7 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => (
         onClick={handleNext}
         className="bg-docsoGreen text-white px-6 py-2 mr-6 rounded-md hover:bg-middleGreen transition duration-300"
       >
-       Save and go to the Next Section
+        Save and go to the Next Section
       </button>
     </div>
   </div>

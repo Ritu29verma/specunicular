@@ -8,10 +8,16 @@ import Step5 from "../components/DoctorFormSteps.jsx/step5";
 import Step6 from "../components/DoctorFormSteps.jsx/step6";
 import Step7 from "../components/DoctorFormSteps.jsx/step7";
 import Step8 from "../components/DoctorFormSteps.jsx/step8";
+import SignUp from "../components/DoctorSignUp";
 
 const DoctorRegistrationForm = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
+    doctorName: '',
+    category: '',
+    phone: '',
+    avatar: null,
+    password : '',
     hospitalId: '',
     registrationNo: "",
     registrationCouncil: "",
@@ -36,7 +42,17 @@ const DoctorRegistrationForm = () => {
     endTime: "",
   });
 
+  useEffect(() => {
+    const savedData = localStorage.getItem('doctorRegistrationFormData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
+  // Save form data to localStorage whenever formData changes
+  useEffect(() => {
+    localStorage.setItem('doctorRegistrationFormData', JSON.stringify(formData));
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -45,6 +61,7 @@ const DoctorRegistrationForm = () => {
         ...formData,
         [name]: files[0],
       });
+
     } else {
       setFormData({
         ...formData,
@@ -102,9 +119,9 @@ const DoctorRegistrationForm = () => {
       // create a alert message upon succesfull registration
       alert("Registration successful");
       // redirect to login page
-    w
+      localStorage.removeItem('doctorRegistrationFormData');
 
-      
+      window.location.href = "/";
       
     } catch (error) {
       console.error("Error registering doctor:", error);
@@ -114,9 +131,18 @@ const DoctorRegistrationForm = () => {
 
   return (
     <div className="doctor-registration-form">
-      <h2> </h2>
+    
       <form onSubmit={handleSubmit}>
-       
+      {step === 0 && (
+        <SignUp
+          formData={formData}
+          setFormData={setFormData}
+          handleChange={handleChange}
+          handleNext={handleNext}
+        />
+      )}
+      
+
         {step === 1 && (
           <Step1
             formData={formData}

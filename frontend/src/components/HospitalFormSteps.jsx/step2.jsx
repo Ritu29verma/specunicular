@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { State, City } from 'country-state-city';
 import MapComponent from '../MapComponent';
+import ProgressBar from '../ProgressBar';
 
 const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => {
   const [states, setStates] = useState([]);
