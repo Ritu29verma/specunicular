@@ -1,40 +1,49 @@
 import React from 'react';
+import Navbar from '../Navbar';
+import ProgressBar from '../ProgressBar2'; 
 
 const Step7 = ({ formData, handleChange, handleSubmit, handlePrev }) => (
-  <div className="max-w-lg mx-auto p-6 bg-green-50 shadow-md rounded-lg">
-    <h2 className="text-xl font-bold text-green-800 mb-4">Final Step</h2>
-    <p className="text-gray-700 mb-4">
-      Please provide the contact details for the hospital. This information will be used for further communication and inquiries.
-    </p>
-    <div className="mb-4">
-      <label htmlFor="phoneNumber" className="block text-green-700 font-semibold mb-2">Phone Number</label>
-      <input
-        type="tel"
-        id="phoneNumber"
-        name="phoneNumber"
-        placeholder="Enter phone number"
-        value={formData.phoneNumber}
-        onChange={handleChange}
-        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        required
-      />
-    </div>
+  <div className="min-h-screen bg-lightGreen">
+    <Navbar showLogin={false} showLogout={false} />
+    <ProgressBar step={7} totalSteps={7} />
+    <div className="max-w-4xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
+     
 
-    <div className="flex justify-between mt-6">
-      <button
-        type="button"
-        onClick={handlePrev}
-        className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-      >
-        Previous
-      </button>
-      <button
-        type="button"
-        onClick={handleSubmit}
-        className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-      >
-        Submit
-      </button>
+      <h2 className="text-2xl font-bold text-docsoGreen mb-6">Final Step: Contact Information</h2>
+      <p className="text-gray-700 mb-8">
+        Please provide the contact details for the hospital. This information will be used for further communication and inquiries.
+      </p>
+      
+      <div className="mb-8">
+        <label htmlFor="phoneNumber" className="block text-docsoGreen font-semibold mb-4">Phone Number</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          placeholder="Enter phone number"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
+          required
+        />
+      </div>
+
+      <div className="flex justify-between mt-10">
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+        >
+          Submit
+        </button>
+      </div>
     </div>
   </div>
 );

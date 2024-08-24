@@ -94,7 +94,6 @@ const HospitalRegistrationForm = () => {
 
   return (
     <div className="hospital-registration-form">
-      <h2>Hospital Registration</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         {step === 1 && <Step1 formData={formData} handleChange={handleChange} handleNext={() => setStep(step + 1)} />}

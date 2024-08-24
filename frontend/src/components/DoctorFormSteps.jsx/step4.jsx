@@ -3,19 +3,31 @@ import Navbar from '../Navbar';
 import ProgressBar from '../ProgressBar';
 
 const Step4 = ({ handleChange, handleNext, handlePrev }) => (
-  <div className="w-full h-screen bg-lightGreen rounded-lg shadow-md flex flex-col">
+  <div className="min-h-screen flex flex-col bg-lightGreen">
     <Navbar showLogin={false} showLogout={false} showOther={false} />
-    <ProgressBar step={4} totalSteps={8} />
+    <div className="flex-1 flex flex-col items-center">
+      <ProgressBar step={4} totalSteps={8} />
 
-    <div className="flex flex-col items-center justify-center flex-1 p-6">
-      <h3 className="text-2xl font-semibold text-middleGreen mb-6 text-center">
-        Upload Identity Proof
-      </h3>
+      <div className="w-full max-w-2xl p-8 bg-white shadow-lg rounded-lg mt-8">
+        <h3 className="text-2xl font-bold text-middleGreen mb-4 text-center">
+          Upload Identity Proof
+        </h3>
+        <p className="text-gray-700 mb-6 text-center">
+          Please upload your identity proof to ensure that the ownership of your profile remains with only you.
+        </p>
+        <p className="text-gray-700 mb-6 text-center">
+          Acceptable documents:
+        </p>
+        <ul className="text-gray-700 mb-6 list-disc list-inside">
+          <li>Aadhar Card</li>
+          <li>Driving License</li>
+          <li>Voter Card</li>
+          <li>Any other Govt. ID</li>
+        </ul>
 
-      <div className="space-y-4 text-left w-full max-w-md">
-        <div>
-          <label htmlFor="identityProof" className="block text-sm font-medium text-gray-700 mb-2">
-           Upload Identity Proof
+        <div className="mb-6">
+          <label htmlFor="identityProof" className="block text-lg font-semibold text-docsoGreen mb-2">
+            Upload Identity Proof
           </label>
           <input
             type="file"
@@ -26,23 +38,23 @@ const Step4 = ({ handleChange, handleNext, handlePrev }) => (
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
           />
         </div>
-      </div>
 
-      <div className="mt-6 flex justify-between w-full max-w-md">
-        <button
-          type="button"
-          onClick={handlePrev}
-          className="bg-gray-400 text-white px-6 py-2 ml-6 rounded-md hover:bg-gray-500 transition duration-300"
-        >
-          Previous
-        </button>
-        <button
-          type="button"
-          onClick={handleNext}
-          className="bg-docsoGreen text-white px-6 py-2 rounded-md hover:bg-middleGreen transition duration-300"
-        >
-          Next
-        </button>
+        <div className="flex justify-between mt-8">
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="py-3 px-6 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-500 transition duration-300"
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen transition duration-300"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import Navbar from '../Navbar'; 
+import ProgressBar from '../ProgressBar2';
 const Step1 = ({ formData, handleChange, handleNext }) => {
   const [errors, setErrors] = useState({});
 
@@ -22,10 +23,17 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
     }
   };
 
-  return (
-    <div className="max-w-lg mx-auto p-6 bg-green-50 shadow-md rounded-lg">
-      <div className="mb-4">
-        <label htmlFor="hospitalName" className="block text-green-700 font-semibold mb-2">Hospital Name</label>
+return (
+  <div className="w-full min-h-screen bg-lightGreen rounded-lg shadow-md">
+    <Navbar showLogin={false} showLogout={false} showOther={false} />
+    <ProgressBar step={1} totalSteps={7} />
+    <h3 className="text-2xl font-semibold text-middleGreen text-left p-3">
+      Hospital Registration Form
+    </h3>
+
+    <div className="space-y-4 text-left w-1/3 p-6">
+      <div>
+        <label htmlFor="hospitalName" className="block text-sm font-medium text-gray-700 mb-2">Hospital Name</label>
         <input
           type="text"
           id="hospitalName"
@@ -33,15 +41,15 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
           placeholder="Hospital Name"
           value={formData.hospitalName}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.hospitalName ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.hospitalName ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.hospitalName && <p className="text-red-500 text-sm mt-1">{errors.hospitalName}</p>}
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="hospitalId" className="block text-green-700 font-semibold mb-2">Hospital Unique Id</label>
+      <div>
+        <label htmlFor="hospitalId" className="block text-sm font-medium text-gray-700 mb-2">Hospital Unique Id</label>
         <input
           type="text"
           id="hospitalId"
@@ -49,15 +57,15 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
           placeholder="Hospital Unique Id"
           value={formData.hospitalId}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.hospitalId ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.hospitalId ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.hospitalId && <p className="text-red-500 text-sm mt-1">{errors.hospitalId}</p>}
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="category" className="block text-green-700 font-semibold mb-2">Category</label>
+      <div>
+        <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">Category</label>
         <input
           type="text"
           id="category"
@@ -65,15 +73,15 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
           placeholder="Category"
           value={formData.category}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.category ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.category ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="specialization" className="block text-green-700 font-semibold mb-2">Specialization</label>
+      <div>
+        <label htmlFor="specialization" className="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
         <input
           type="text"
           id="specialization"
@@ -81,15 +89,15 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
           placeholder="Specialization"
           value={formData.specialization}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.specialization ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.specialization ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.specialization && <p className="text-red-500 text-sm mt-1">{errors.specialization}</p>}
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="services" className="block text-green-700 font-semibold mb-2">Services</label>
+      <div>
+        <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-2">Services</label>
         <input
           type="text"
           id="services"
@@ -97,37 +105,39 @@ const Step1 = ({ formData, handleChange, handleNext }) => {
           placeholder="Services"
           value={formData.services}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.services ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.services ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.services && <p className="text-red-500 text-sm mt-1">{errors.services}</p>}
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="description" className="block text-green-700 font-semibold mb-2">Description</label>
+      <div>
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">Description</label>
         <textarea
           id="description"
           name="description"
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-            errors.description ? 'border-red-500 focus:ring-red-500' : 'border-green-300 focus:ring-green-500'
+          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ${
+            errors.description ? 'border-red-500 focus:ring-red-500' : 'focus:ring-middleGreen'
           }`}
         />
         {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
       </div>
+    </div>
 
+    <div className="mt-6 flex justify-end">
       <button
         type="button"
         onClick={handleNextClick}
-        className="w-full py-2 px-4 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="bg-docsoGreen text-white px-6 py-2 mr-5 rounded-md hover:bg-middleGreen transition duration-300 m-5"
       >
-        Next
+        Save and go to the Next Section
       </button>
     </div>
-  );
-};
+  </div>
+)};
 
 export default Step1;
