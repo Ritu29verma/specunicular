@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
 import ProgressBar from '../ProgressBar';
 
@@ -27,14 +27,8 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
 
   const handleMorningTimeChange = (day, timeType, value) => {
     const updatedTimes = { ...morningTimes[day], [timeType]: value };
-    if (timeType === 'end' && !updatedTimes.start) {
-      alert('Please set the start time before setting the end time.');
-      setMorningTimes(prev => ({
-        ...prev,
-        [day]: { ...prev[day], end: '' },
-      }));
-    } else if (timeType === 'end' && updatedTimes.start && value < updatedTimes.start) {
-      alert('End time cannot be earlier than start time');
+    if (timeType === 'end' && (!updatedTimes.start || value < updatedTimes.start)) {
+      alert('End time cannot be earlier than start time.');
       setMorningTimes(prev => ({
         ...prev,
         [day]: { ...prev[day], end: '' },
@@ -49,17 +43,11 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
 
   const handleAfternoonTimeChange = (day, timeType, value) => {
     const updatedTimes = { ...afternoonTimes[day], [timeType]: value };
-    if (timeType === 'end' && !updatedTimes.start) {
-      alert('Please set the start time before setting the end time.');
+    if (timeType === 'end' && (!updatedTimes.start || value < updatedTimes.start)) {
+      alert('End time cannot be earlier than start time.');
       setAfternoonTimes(prev => ({
         ...prev,
         [day]: { ...prev[day], end: '' },
-      }));
-    } else if (timeType === 'end' && updatedTimes.start && value < updatedTimes.start) {
-      alert('End time cannot be earlier than start time');
-      setAfternoonTimes(prev => ({
-        ...prev,
-        [day]: updatedTimes,
       }));
     } else {
       setAfternoonTimes(prev => ({
@@ -71,6 +59,23 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
 
   const isTimingComplete = (day) => {
     return morningTimes[day]?.start && morningTimes[day]?.end && afternoonTimes[day]?.start && afternoonTimes[day]?.end;
+  };
+
+  const getValidTimes = (day, type) => {
+    const times = Array.from({ length: 24 }, (_, i) => i < 10 ? `0${i}:00` : `${i}:00`);
+    const startTimes = type === 'morning' ? times.slice(0, 12) : times.slice(12);
+
+    if (type === 'morning') {
+      if (morningTimes[day]?.start) {
+        return startTimes.filter(time => time >= morningTimes[day].start);
+      }
+    } else if (type === 'afternoon') {
+      if (afternoonTimes[day]?.start) {
+        return startTimes.filter(time => time >= afternoonTimes[day].start);
+      }
+    }
+
+    return startTimes;
   };
 
   return (
@@ -108,46 +113,52 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
           {selectedDays.length > 0 && (
             <div className="space-y-2 mt-4 max-w-md">
               <div className="text-lg text-gray-800 font-semibold">Set Timing for Selected Days</div>
-              <div className="flex space-x-4">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Morning Start Time</label>
-                  <input
-                    type="time"
-                    value={morningTimes[selectedDays[0]]?.start || ''}
-                    onChange={(e) => handleMorningTimeChange(selectedDays[0], 'start', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                  />
+              {selectedDays.map((day) => (
+                <div key={day} className="mt-4">
+                  <div className="flex space-x-4">
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-gray-700">Morning Start Time</label>
+                      <input
+                        type="time"
+                        value={morningTimes[day]?.start || ''}
+                        onChange={(e) => handleMorningTimeChange(day, 'start', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-gray-700">Morning End Time</label>
+                      <input
+                        type="time"
+                        value={morningTimes[day]?.end || ''}
+                        onChange={(e) => handleMorningTimeChange(day, 'end', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                        disabled={!morningTimes[day]?.start}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex space-x-4 mt-2">
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-gray-700">Afternoon Start Time</label>
+                      <input
+                        type="time"
+                        value={afternoonTimes[day]?.start || ''}
+                        onChange={(e) => handleAfternoonTimeChange(day, 'start', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-gray-700">Afternoon End Time</label>
+                      <input
+                        type="time"
+                        value={afternoonTimes[day]?.end || ''}
+                        onChange={(e) => handleAfternoonTimeChange(day, 'end', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                        disabled={!afternoonTimes[day]?.start}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Morning End Time</label>
-                  <input
-                    type="time"
-                    value={morningTimes[selectedDays[0]]?.end || ''}
-                    onChange={(e) => handleMorningTimeChange(selectedDays[0], 'end', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                  />
-                </div>
-              </div>
-              <div className="flex space-x-4 mt-2">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Afternoon Start Time</label>
-                  <input
-                    type="time"
-                    value={afternoonTimes[selectedDays[0]]?.start || ''}
-                    onChange={(e) => handleAfternoonTimeChange(selectedDays[0], 'start', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Afternoon End Time</label>
-                  <input
-                    type="time"
-                    value={afternoonTimes[selectedDays[0]]?.end || ''}
-                    onChange={(e) => handleAfternoonTimeChange(selectedDays[0], 'end', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           )}
 
