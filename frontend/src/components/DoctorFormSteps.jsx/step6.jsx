@@ -30,7 +30,7 @@ const Step6 = ({ handleChange, handleNext, handlePrev }) => (
           <div className="w-full max-w-md">
             <label
               htmlFor="establishmentProof"
-              className="block text-sm font-medium text-gray-700 mb-2 text-center"
+              className="block text-lg font-semibold text-docsoGreen mb-2"
             >
               Upload Establishment Proof
             </label>

@@ -7,8 +7,12 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrev }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.totalDoctorStaff) newErrors.totalDoctorStaff = 'Total Doctor Staff is required.';
-    if (!formData.nursingStaff && formData.nursingStaff !== 0) newErrors.nursingStaff = 'Nursing Staff is required.';
+    if (!formData.totalDoctorStaff && formData.totalDoctorStaff !== 0) {
+      newErrors.totalDoctorStaff = 'Total Doctor Staff is required.';
+    }
+    if (!formData.nursingStaff && formData.nursingStaff !== 0) {
+      newErrors.nursingStaff = 'Nursing Staff is required.';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -27,7 +31,7 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrev }) => {
       <div className="max-w-2xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
         
         <div>
-          <div className=" m-6">
+          <div className="m-6">
             <label htmlFor="totalDoctorStaff" className="block text-docsoGreen font-semibold mb-2">Total Doctor Staff</label>
             <input
               type="number"
@@ -44,7 +48,7 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrev }) => {
             {errors.totalDoctorStaff && <p className="text-red-500 text-sm mt-1">{errors.totalDoctorStaff}</p>}
           </div>
 
-          <div className=" m-6">
+          <div className="m-6">
             <label htmlFor="nursingStaff" className="block text-docsoGreen font-semibold mb-2">Nursing Staff</label>
             <input
               type="number"

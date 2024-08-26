@@ -9,7 +9,7 @@ import AdminLoginPage from './pages/AdminLoginPage';
 import DoctorInfo from './pages/DoctorInfoPage';
 import HospitalInfo from './pages/HospitalInfoPage';
 import SearchResults from './pages/SearchResult';
-
+import LandingPage from './pages/LandingPage';
 
 const App = () => {
   const [isAdminAuthenticated, setAdminAuthenticated] = useState(false);
@@ -17,7 +17,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/doctor-registration" element={<DoctorRegistrationForm />} />
         <Route path="/hospital-registration" element={<HospitalRegistrationForm />} />
         <Route path="/hospital-profile" element={<HospitalProfile />} />

@@ -18,6 +18,6 @@ export const  doctorColleges = [
     "Government Medical College, Surat",
     "Government Medical College, Nagpur",
     "Government Medical College, Jammu",
-    "Government Medical College, Amritsar"
+    "Government Medical College, Amritsar",
   ];
   
