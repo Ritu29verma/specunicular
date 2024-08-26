@@ -15,7 +15,7 @@ const doctorSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
-  registrationNo: { type: String, required: true },
+  registrationNo: { type: String, required: true,unique:true },
   registrationCouncil: { type: String, required: true },
   registrationYear: { type: String, required: true },
   degree: { type: String, required: true },
@@ -31,9 +31,13 @@ const doctorSchema = new mongoose.Schema({
   isApproved: { type: Boolean, default: false },
   timingSlots: [
     {
-      day: { type: String, required: true },
-      startTime: { type: String, required: true },
-      endTime: { type: String, required: true },
+      days: [{ type: String, required: true }],
+      startTime: { type: String },
+      endTime: { type: String},
+      morningStart: { type: String }, // Updated field names
+      morningEnd: { type: String },
+      afternoonStart: { type: String },
+      afternoonEnd: { type: String },
     },
   ],
   consultancyFees: { type: String, required: true },

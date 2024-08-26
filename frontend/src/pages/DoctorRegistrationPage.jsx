@@ -10,6 +10,7 @@ import Step7 from "../components/DoctorFormSteps.jsx/step7";
 import Step8 from "../components/DoctorFormSteps.jsx/step8";
 import SignUp from "../components/DoctorSignUp";
 
+
 const DoctorRegistrationForm = () => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const DoctorRegistrationForm = () => {
     experience: "",
     establishmentName: "",
     city: "",
-    locality: "",
+    State: "",
     identityProof: null,
     medicalRegistrationProof: null,
     establishmentProof: null,
@@ -37,9 +38,13 @@ const DoctorRegistrationForm = () => {
   });
 
   const [timingSlot, setTimingSlot] = useState({
-    day: "",
+    days: "",
     startTime: "",
     endTime: "",
+    morningStart: '',
+      morningEnd:'',
+      afternoonStart: '',
+      afternoonEnd:''
   });
 
   useEffect(() => {
@@ -70,20 +75,18 @@ const DoctorRegistrationForm = () => {
     }
   };
 
-  const handleTimingSlotChange = (e) => {
-    const { name, value } = e.target;
-    setTimingSlot({
-      ...timingSlot,
-      [name]: value,
+  const handleTimingSlotChange = (updatedSlots) => {
+    setFormData({
+      ...formData,
+      timingSlots: updatedSlots,
     });
   };
 
-  const handleAddTimingSlot = () => {
+  const handleAddTimingSlot = (slot) => {
     setFormData({
       ...formData,
-      timingSlots: [...formData.timingSlots, timingSlot],
+      timingSlots: [...formData.timingSlots, slot],
     });
-    setTimingSlot({ day: "", startTime: "", endTime: "" });
   };
 
   const handleNext = () => {

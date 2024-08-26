@@ -40,27 +40,44 @@ const DoctorInfo = () => {
             <img
               src={`http://localhost:5000/uploads/avatar/${doctor.avatar}`}
               alt={doctor.doctorName}
-              className=" m-4 w-40 h-40 rounded-md object-cover mb-4 md:mb-0 md:mr-6"
+              className=" m-4 w-52 h-60 rounded-md object-cover mb-4 md:mb-0 md:mr-6"
             />
             <div>
-              <h2 className="text-3xl font-bold mb-2">{doctor.doctorName}</h2>
+              <h2 className="text-3xl font-bold mb-2"> Dr. {doctor.doctorName}</h2>
+              <h2 className="text-xl font-semibold mb-2">{doctor.degree}</h2>
               <p className="text-lg mb-2"><strong>Category:</strong> {doctor.category}</p>
+              <p className="text-lg mb-2"><strong>Experience:</strong> {doctor.experience} Years</p>
               <p className="text-lg mb-2"><strong>State:</strong> {doctor.state}</p>
               <p className="text-lg mb-2"><strong>City:</strong> {doctor.city}</p>
               <p className="text-lg mb-4"><strong>Consultancy Fees:</strong> INR {doctor.consultancyFees}</p>
+              <p className="text-lg mb-4"><strong>Phone NO:</strong> {doctor.phone}</p>
+              <p className="text-lg mb-4"><strong>Email:</strong>  {doctor.email}</p>
             </div>
           </div>
-
-          <div className="mb-6">
+          <hr style={{ background: 'lime', height: '3px', border: 'none' }} />
+            <br></br>
+            <div className="mb-6">
             <h3 className="text-2xl font-semibold mb-4">Timing Slots</h3>
             {doctor.timingSlots && Array.isArray(doctor.timingSlots) ? (
-              <ul className="list-disc list-inside text-gray-600 text-xl">
-                {doctor.timingSlots.map((slot) => (
-                  <li key={slot._id}>
-                    {slot.day}: {slot.startTime} - {slot.endTime}
-                  </li>
+              <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+                {doctor.timingSlots.map((slot, index) => (
+                  <div key={slot._id} className="mb-4">
+                    <h4 className="text-xl font-semibold mb-2">{slot.days.join(", ")}</h4>
+                    <div className="space-y-2">
+                      {slot.morningStart && slot.morningEnd && (
+                        <p className="text-lg">
+                          <strong>Morning:</strong> {slot.morningStart} - {slot.morningEnd}
+                        </p>
+                      )}
+                      {slot.afternoonStart && slot.afternoonEnd && (
+                        <p className="text-lg">
+                          <strong>Afternoon:</strong> {slot.afternoonStart} - {slot.afternoonEnd}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
               <p className="text-gray-600">No timing slots available.</p>
             )}

@@ -18,6 +18,12 @@ const uploadFile = (file, folder) => {
   return file.name;
 };
 
+// const validateTimingSlots = (timingSlots) => {
+//   return timingSlots.every(slot => 
+//     slot.day && slot.startTime && slot.endTime
+//   );
+// }
+
 // Register doctor
 export const registerDoctor = async (req, res) => {
   try {
@@ -41,7 +47,12 @@ export const registerDoctor = async (req, res) => {
       timingSlots,
       consultancyFees,
     } = req.body;
+  
+    console.log("Received timingSlots:", timingSlots);
 
+    // if (!validateTimingSlots(JSON.parse(timingSlots || '[]'))) {
+    //   return res.status(400).json({ message: "Invalid timing slots. Please ensure all required fields are filled." });
+    // }
 
     // Handle file uploads
     const identityProof = req.files.identityProof
@@ -89,7 +100,7 @@ export const registerDoctor = async (req, res) => {
     // Update hospital with new doctor
     const updatedHospital = await Hospital.findOneAndUpdate(
       { hospitalId: hospitalId },
-      { $push: { doctors: doctor._id } }, // Push doctor ID to hospital's doctors array
+      { $push: { doctors: doctor } }, // Push doctor ID to hospital's doctors array
       { new: true, upsert: true } // Return updated document or create a new one if none exists
     );
 

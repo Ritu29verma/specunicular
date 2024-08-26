@@ -1,195 +1,169 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
-import ProgressBar from '../ProgressBar';
+import ProgressBar from '../ProgressBar2';
+
+const daysOfWeek = [
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+];
 
 const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => {
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [morningTimes, setMorningTimes] = useState({});
-  const [afternoonTimes, setAfternoonTimes] = useState({});
+  const [timings, setTimings] = useState(formData.timings || []);
 
-  const handleDayChange = (day) => {
+  useEffect(() => {
+    handleTimingSlotChange(timings);
+  }, [ timings]);
+
+  const handleAddTimingSlot = () => {
+    setTimings([...timings, { days: [], morningStart: '', morningEnd: '', afternoonStart: '', afternoonEnd: '' }]);
+  };
+
+  const handleRemoveTimingSlot = (index) => {
+    setTimings(timings.filter((_, i) => i !== index));
+  };
+
+  const handleTimingChange = (index, e) => {
+    const { name, value } = e.target;
+    const newTimings = [...timings];
+    newTimings[index][name] = value;
+    setTimings(newTimings);
+  };
+
+  const handleDayChange = (index, day) => {
+    const newTimings = [...timings];
+    const selectedDays = newTimings[index].days;
     if (selectedDays.includes(day)) {
-      setSelectedDays(selectedDays.filter(d => d !== day));
-      setMorningTimes(prev => ({ ...prev, [day]: { start: '', end: '' } }));
-      setAfternoonTimes(prev => ({ ...prev, [day]: { start: '', end: '' } }));
+      newTimings[index].days = selectedDays.filter(d => d !== day);
     } else {
-      setSelectedDays([...selectedDays, day]);
+      newTimings[index].days.push(day);
     }
-  };
-
-  const convertTo12Hour = (time) => {
-    const [hour, minute] = time.split(':');
-    const hourInt = parseInt(hour);
-    const period = hourInt >= 12 ? 'PM' : 'AM';
-    const adjustedHour = hourInt % 12 || 12;
-    return `${adjustedHour}:${minute} ${period}`;
-  };
-
-  const handleMorningTimeChange = (day, timeType, value) => {
-    const updatedTimes = { ...morningTimes[day], [timeType]: value };
-    if (timeType === 'end' && (!updatedTimes.start || value < updatedTimes.start)) {
-      alert('End time cannot be earlier than start time.');
-      setMorningTimes(prev => ({
-        ...prev,
-        [day]: { ...prev[day], end: '' },
-      }));
-    } else {
-      setMorningTimes(prev => ({
-        ...prev,
-        [day]: updatedTimes,
-      }));
-    }
-  };
-
-  const handleAfternoonTimeChange = (day, timeType, value) => {
-    const updatedTimes = { ...afternoonTimes[day], [timeType]: value };
-    if (timeType === 'end' && (!updatedTimes.start || value < updatedTimes.start)) {
-      alert('End time cannot be earlier than start time.');
-      setAfternoonTimes(prev => ({
-        ...prev,
-        [day]: { ...prev[day], end: '' },
-      }));
-    } else {
-      setAfternoonTimes(prev => ({
-        ...prev,
-        [day]: updatedTimes,
-      }));
-    }
-  };
-
-  const isTimingComplete = (day) => {
-    return morningTimes[day]?.start && morningTimes[day]?.end && afternoonTimes[day]?.start && afternoonTimes[day]?.end;
-  };
-
-  const getValidTimes = (day, type) => {
-    const times = Array.from({ length: 24 }, (_, i) => i < 10 ? `0${i}:00` : `${i}:00`);
-    const startTimes = type === 'morning' ? times.slice(0, 12) : times.slice(12);
-
-    if (type === 'morning') {
-      if (morningTimes[day]?.start) {
-        return startTimes.filter(time => time >= morningTimes[day].start);
-      }
-    } else if (type === 'afternoon') {
-      if (afternoonTimes[day]?.start) {
-        return startTimes.filter(time => time >= afternoonTimes[day].start);
-      }
-    }
-
-    return startTimes;
+    setTimings(newTimings);
   };
 
   return (
-    <div className="min-h-screen min-w-full bg-lightGreen rounded-lg shadow-md flex flex-col">
-      <Navbar showLogin={false} showLogout={false} showOther={false} />
+    <div className="min-h-screen bg-lightGreen">
+      <Navbar showLogin={false} showLogout={false} />
       <ProgressBar step={7} totalSteps={8} />
+      <div className="max-w-4xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
 
-      <div className="flex flex-col flex-1 p-3 overflow-auto">
-        <h3 className="text-2xl font-semibold text-middleGreen text-left mb-4">
-          Establishment Timing
-        </h3>
+        <h2 className="text-2xl font-bold text-docsoGreen mb-6">Set Establishment Timing</h2>
+        <p className="text-gray-700 mb-8">
+          Please provide the available timing slots. You can specify multiple days and the start and end times for each slot, including separate timings for morning and afternoon.
+        </p>
 
-        <div className="space-y-4 text-left w-full">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Days
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                <div
-                  key={day}
-                  onClick={() => handleDayChange(day)}
-                  className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full border-2 ${
-                    selectedDays.includes(day)
-                      ? 'bg-white border-middleGreen'
-                      : 'bg-lightGreen border-black'
-                  }`}
-                >
-                  <span className="text-gray-700 font-medium">{day.slice(0, 2)}</span>
+        {timings.map((timing, index) => (
+          <div key={index} className="mb-6 p-6 bg-lightGreen shadow-sm rounded-lg">
+            <div className="grid gap-6">
+              <div>
+                <label className="block text-docsoGreen font-semibold mb-2">Select Days</label>
+                <div className="flex flex-wrap gap-2">
+                  {daysOfWeek.map(day => (
+                    <button
+                      key={day}
+                      type="button"
+                      onClick={() => handleDayChange(index, day)}
+                      className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full border-2 ${
+                        timing.days.includes(day)
+                          ? 'bg-docsoGreen text-white border-middleGreen'
+                          : 'bg-lightGreen border-gray-400 text-gray-600'
+                      }`}
+                    >
+                      {day.slice(0, 2)}
+                    </button>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor={`morningStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Morning Start Time</label>
+                  <input
+                    type="time"
+                    id={`morningStart_${index}`}
+                    name="morningStart"
+                    value={timing.morningStart}
+                    onChange={(e) => handleTimingChange(index, e)}
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor={`morningEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Morning End Time</label>
+                  <input
+                    type="time"
+                    id={`morningEnd_${index}`}
+                    name="morningEnd"
+                    value={timing.morningEnd}
+                    onChange={(e) => handleTimingChange(index, e)}
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor={`afternoonStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Afternoon Start Time</label>
+                  <input
+                    type="time"
+                    id={`afternoonStart_${index}`}
+                    name="afternoonStart"
+                    value={timing.afternoonStart}
+                    onChange={(e) => handleTimingChange(index, e)}
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor={`afternoonEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Afternoon End Time</label>
+                  <input
+                    type="time"
+                    id={`afternoonEnd_${index}`}
+                    name="afternoonEnd"
+                    value={timing.afternoonEnd}
+                    onChange={(e) => handleTimingChange(index, e)}
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
+                    required
+                  />
+                </div>
+              </div>
             </div>
+
+            <button
+              type="button"
+              onClick={() => handleRemoveTimingSlot(index)}
+              className="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              Remove
+            </button>
           </div>
+        ))}
 
-          {selectedDays.length > 0 && (
-            <div className="space-y-2 mt-4 max-w-md">
-              <div className="text-lg text-gray-800 font-semibold">Set Timing for Selected Days</div>
-              {selectedDays.map((day) => (
-                <div key={day} className="mt-4">
-                  <div className="flex space-x-4">
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">Morning Start Time</label>
-                      <input
-                        type="time"
-                        value={morningTimes[day]?.start || ''}
-                        onChange={(e) => handleMorningTimeChange(day, 'start', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">Morning End Time</label>
-                      <input
-                        type="time"
-                        value={morningTimes[day]?.end || ''}
-                        onChange={(e) => handleMorningTimeChange(day, 'end', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                        disabled={!morningTimes[day]?.start}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex space-x-4 mt-2">
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">Afternoon Start Time</label>
-                      <input
-                        type="time"
-                        value={afternoonTimes[day]?.start || ''}
-                        onChange={(e) => handleAfternoonTimeChange(day, 'start', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">Afternoon End Time</label>
-                      <input
-                        type="time"
-                        value={afternoonTimes[day]?.end || ''}
-                        onChange={(e) => handleAfternoonTimeChange(day, 'end', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
-                        disabled={!afternoonTimes[day]?.start}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <ul className="mt-4 space-y-2">
-            {selectedDays.map((day, index) => (
-              isTimingComplete(day) && (
-                <li key={index} className="text-gray-700">
-                  {day}:
-                  Morning: {morningTimes[day]?.start} - {morningTimes[day]?.end},
-                  Afternoon: {convertTo12Hour(afternoonTimes[day]?.start)} - {convertTo12Hour(afternoonTimes[day]?.end)}
-                </li>
-              )
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-6 flex justify-between w-full max-w-md">
+        <div className="flex justify-between mt-8">
           <button
             type="button"
-            onClick={handlePrev}
-            className="bg-gray-400 text-white px-6 py-2 ml-6 rounded-md hover:bg-gray-500 transition duration-300"
+            onClick={handleAddTimingSlot}
+            className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
           >
-            Previous
+            Add Timing Slot
           </button>
-          <button
-            type="button"
-            onClick={handleNext}
-            className="bg-docsoGreen text-white px-6 py-2 rounded-md hover:bg-middleGreen transition duration-300"
-          >
-            Next
-          </button>
+          <div className="flex space-x-4">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

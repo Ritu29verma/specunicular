@@ -58,7 +58,7 @@ const AdminPage = () => {
               <th className="py-2 px-4 border-b">Registration No</th>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">City</th>
-              <th className="py-2 px-4 border-b">Specialization</th>
+              <th className="py-2 px-4 border-b">Category</th>
               <th className="py-2 px-4 border-b">Timing Slots</th>
               <th className="py-2 px-4 border-b">Consultancy Fees</th>
               <th className="py-2 px-4 border-b">Identity Proof</th>
@@ -73,7 +73,7 @@ const AdminPage = () => {
                 <td className="py-2 px-4 border-b">{doctor.registrationNo}</td>
                 <td className="py-2 px-4 border-b">{doctor.doctorName}</td>
                 <td className="py-2 px-4 border-b">{doctor.city}</td>
-                <td className="py-2 px-4 border-b">{doctor.specialization}</td>
+                <td className="py-2 px-4 border-b">{doctor.category}</td>
                 <td className="py-2 px-4 border-b">{formatTimingSlots(doctor.timingSlots)}</td>
                 <td className="py-2 px-4 border-b">{doctor.consultancyFees}</td>
                 <td className="py-2 px-4 border-b">

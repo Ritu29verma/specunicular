@@ -78,7 +78,7 @@ const HomePage = () => {
         
         <div className="flex flex-col md:flex-row items-center justify-around w-full max-w-5xl">
           {/* Doctor and Hospital Registration Boxes */}
-          <div className="bg-white shadow-xl rounded-lg p-8 m-4 w-full md:w-2/5 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+          <div className="bg-white shadow-xl rounded-lg p-8 m-4 w-full md:w-2/5 cursor-pointer transform transition-all duration-300 hover:scale-90 hover:shadow-2xl">
             <div className="flex flex-col items-center">
               <img src="https://img.icons8.com/color/96/000000/doctor-male.png" alt="Doctor" className="mb-4 w-24 h-24" />
               <h2 className="text-2xl font-semibold text-indigo-800 text-center mb-4">Are you a Doctor?</h2>
