@@ -39,7 +39,7 @@ const DoctorCard = ({ doctor }) => {
         </div>
       </div>
 
-      <div className="bg-gray-200 p-4 rounded-lg">
+      {/* <div className="bg-gray-200 p-4 rounded-lg">
         <p className="text-gray-800 font-semibold text-sm mb-2">Timing Slots:</p>
         <ul className="list-disc list-inside text-gray-600 text-sm">
           {doctor.timingSlots && doctor.timingSlots.length > 0 ? (
