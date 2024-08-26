@@ -100,7 +100,6 @@ return (
         <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-2">Services</label>
         <input
           type="text"
-          id="services"
           name="services"
           placeholder="Services"
           value={formData.services}

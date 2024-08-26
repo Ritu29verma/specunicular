@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar';
 import ProgressBar from '../ProgressBar2';
+
 const Step3 = ({ formData, handleChange, handleNext, handlePrev }) => {
   const [errors, setErrors] = useState({});
 
@@ -8,7 +9,6 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrev }) => {
     const newErrors = {};
     if (!formData.totalBeds) newErrors.totalBeds = 'Total Beds is required.';
     if (!formData.availableBeds && formData.availableBeds !== 0) newErrors.availableBeds = 'Available Beds is required.';
-    if (formData.availableBeds > formData.totalBeds) newErrors.availableBeds = 'Available Beds cannot be greater than Total Beds.';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

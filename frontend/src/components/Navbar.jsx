@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
 
-export default function Navbar({ showLogin, showLogout, showOther }) {
+export default function Navbar({ showLogin, showR, showOther, showSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
@@ -15,6 +15,10 @@ export default function Navbar({ showLogin, showLogout, showOther }) {
     if (searchTerm.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
     }
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/home');
   };
 
   return (
@@ -30,30 +34,38 @@ export default function Navbar({ showLogin, showLogout, showOther }) {
           </div>
 
           {showOther && (
-            <ul className="hidden md:flex space-x-6 text-white">
-              <li className="hover:text-lightGreen"><a href="#">Home</a></li>
-              <li className="hover:text-lightGreen"><a href="#">About</a></li>
-              <li className="hover:text-lightGreen"><a href="#">Contact</a></li>
+            <ul className="flex-grow flex justify-center space-x-6 text-white">
+              <li className="hover:text-lightGreen">
+                <Link to="/">Home</Link>
+              </li>
+              <li className="hover:text-lightGreen">
+                <Link to="/about">About</Link>
+              </li>
+              <li className="hover:text-lightGreen">
+                <Link to="/contact">Contact</Link>
+              </li>
             </ul>
           )}
 
-          <div className="flex-grow mx-4">
-            <form onSubmit={handleSearchSubmit} className="flex">
-              <input
-                type="text"
-                placeholder="Search Hospitals or Doctors..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="w-full px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-docsoGreen"
-              />
-              <button
-                type="submit"
-                className="bg-docsoGreen text-white px-4 py-2 rounded-r-md hover:bg-darkGreen transition duration-300"
-              >
-                Search
-              </button>
-            </form>
-          </div>
+          {showSearch && (
+            <div className="flex items-center">
+              <form onSubmit={handleSearchSubmit} className="flex">
+                <input
+                  type="text"
+                  placeholder="Search Hospitals or Doctors..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-docsoGreen"
+                />
+                <button
+                  type="submit"
+                  className="bg-docsoGreen text-white px-4 py-2 rounded-r-md hover:bg-darkGreen transition duration-300"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          )}
 
           <div className="hidden md:flex space-x-4">
             {showLogin && (
@@ -61,9 +73,12 @@ export default function Navbar({ showLogin, showLogout, showOther }) {
                 Login
               </button>
             )}
-            {showLogout && (
-              <button className="text-white border-2 border-white px-4 py-2 rounded-md hover:bg-white hover:text-docsoGreen transition duration-300">
-                Logout
+            {showR && (
+              <button
+                className="text-white border-2 border-white px-4 py-2 rounded-md hover:bg-white hover:text-docsoGreen transition duration-300"
+                onClick={handleRegisterClick}
+              >
+                Register Yourself
               </button>
             )}
           </div>

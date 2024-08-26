@@ -14,6 +14,6 @@ export const doctorDegrees = [
     "MD (Homeopathy)",
     "MD (Ayurveda)",
     "MD (Unani)",
-    "MD (Siddha)"
+    "MD (Siddha)",
   ];
   
