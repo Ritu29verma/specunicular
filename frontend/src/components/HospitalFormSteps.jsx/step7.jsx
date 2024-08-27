@@ -15,13 +15,13 @@ const Step7 = ({ formData, handleChange, handleSubmit, handlePrev }) => (
       </p>
       
       <div className="mb-8">
-        <label htmlFor="phoneNumber" className="block text-docsoGreen font-semibold mb-4">Phone Number</label>
+        <label htmlFor="contactDetails" className="block text-docsoGreen font-semibold mb-4">Phone Number</label>
         <input
-          type="tel"
-          id="phoneNumber"
-          name="phoneNumber"
+          type="phone"
+          id="contactDetails"
+          name="contactDetails"
           placeholder="Enter phone number"
-          value={formData.phoneNumber}
+          value={formData.contactDetails}
           onChange={handleChange}
           className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
           required

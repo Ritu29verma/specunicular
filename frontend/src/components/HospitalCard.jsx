@@ -10,7 +10,7 @@ const HospitalCard = ({ hospital }) => {
 
   return (
     <div
-      className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+      className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-95 transition-all duration-300 ease-in-out cursor-pointer"
       onClick={handleCardClick}
     >
       <h3 className="text-xl font-bold text-gray-900 mb-3">{hospital.hospitalName}</h3>

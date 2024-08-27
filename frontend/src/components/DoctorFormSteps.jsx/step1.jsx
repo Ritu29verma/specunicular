@@ -57,21 +57,21 @@ const Step1 = ({ formData, handleChange, handleNext, handlePrev }) => {
         </div>
 
         <div>
-          <label htmlFor="registrationNumber" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="registrationNo" className="block text-sm font-medium text-gray-700 mb-2">
             Enter Your Registration Number
           </label>
           <input
             type="text"
-            name="registrationNumber"
+            name="registrationNo"
             placeholder="Registration Number"
-            value={formData.registrationNumber}
+            value={formData.registrationNo}
             onChange={handleChange}
             required
             className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 ${
-              errors.registrationNumber ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-middleGreen'
+              errors.registrationNo ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-middleGreen'
             }`}
           />
-          {errors.registrationNumber && <p className="text-red-500 text-sm mt-1">{errors.registrationNumber}</p>}
+          {errors.registrationNo && <p className="text-red-500 text-sm mt-1">{errors.registrationNo}</p>}
         </div>
 
         <div>
@@ -147,7 +147,7 @@ const Step1 = ({ formData, handleChange, handleNext, handlePrev }) => {
         </button>
         <button
           type="button"
-          onClick={handleNextClick}
+          onClick={handleNext}
           className="bg-docsoGreen text-white mb-7  px-6 py-2 mr-6 rounded-md hover:bg-middleGreen transition duration-300"
         >
           Save and go to the Next Section
