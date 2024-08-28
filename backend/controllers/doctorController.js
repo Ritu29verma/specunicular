@@ -47,12 +47,8 @@ export const registerDoctor = async (req, res) => {
       timingSlots,
       consultancyFees,
     } = req.body;
-  
-    console.log("Received timingSlots:", timingSlots);
 
-    // if (!validateTimingSlots(JSON.parse(timingSlots || '[]'))) {
-    //   return res.status(400).json({ message: "Invalid timing slots. Please ensure all required fields are filled." });
-    // }
+    console.log("Received timingSlots:", timingSlots);
 
     // Handle file uploads
     const identityProof = req.files.identityProof
@@ -96,17 +92,18 @@ export const registerDoctor = async (req, res) => {
 
     // Save doctor to database
     await doctor.save();
+    // Find the hospital document
+    const hospital = await Hospital.findOne({ hospitalId: hospitalId });
 
-    // Update hospital with new doctor
-    const updatedHospital = await Hospital.findOneAndUpdate(
-      { hospitalId: hospitalId },
-      { $push: { doctors: doctor } }, // Push doctor ID to hospital's doctors array
-      { new: true, upsert: true } // Return updated document or create a new one if none exists
-    );
-
-    if (!updatedHospital) {
-      return res.status(404).json({ message: "Hospital not found" });
+    if (hospital) {
+      // If hospital found, update hospital with new doctor
+      await Hospital.findOneAndUpdate(
+        { hospitalId: hospitalId },
+        { $push: { doctors: doctor } }, // Push doctor ID to hospital's doctors array
+        { new: true } // Return updated document
+      );
     }
+    
 
     res.status(201).json({ message: "Doctor registered successfully!" });
   } catch (error) {
@@ -119,6 +116,7 @@ export const registerDoctor = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Get all doctors
 export const getAllDoctors = async (req, res) => {

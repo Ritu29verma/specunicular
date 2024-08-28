@@ -1,20 +1,18 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema({
   doctorName: { type: String, required: true }, // Add doctor's name for signup
-  phone: { type: String, required: true, unique: true }, // Add mobile number for signup
+  phone: { type: String, required: true }, // Add mobile number for signup
   category: { type: String, required: true }, // Add category for signup
   avatar: { type: String }, // Add profile avatar for signup
   password: { type: String, required: true },
   email: {
     type: String,
-    required: true, // Ensure the email field is required
-    unique: true, // Ensure the email field is unique
-    trim: true,
-    lowercase: true
+    required: true, // Ensure the email field is required 
+    lowercase: true,
   },
-  registrationNo: { type: String, required: true,unique:true },
+  hospitalId: { type: String },
+  registrationNo: { type: String, required: true },
   registrationCouncil: { type: String, required: true },
   registrationYear: { type: String, required: true },
   degree: { type: String, required: true },
@@ -32,7 +30,7 @@ const doctorSchema = new mongoose.Schema({
     {
       days: [{ type: String, required: true }],
       startTime: { type: String },
-      endTime: { type: String},
+      endTime: { type: String },
       morningStart: { type: String }, // Updated field names
       morningEnd: { type: String },
       afternoonStart: { type: String },
@@ -42,27 +40,31 @@ const doctorSchema = new mongoose.Schema({
   consultancyFees: { type: String, required: true },
 });
 
-
 const hospitalSchema = new mongoose.Schema({
   hospitalName: { type: String, required: true },
-  hospitalId:String,
+  hospitalId: { type: String, unique: true },
   category: String,
   specialization: String,
   services: String,
   description: String,
   city: String,
   state: String,
-  locality: String,
   totalBeds: Number,
   availableBeds: Number,
   totalDoctorStaff: Number,
   nursingStaff: Number,
-  timings: [{ day: String, startTime: String, endTime: String }],
+  timings: [
+    {
+      days: [{ type: String, required: true }],
+      startTime: { type: String },
+      endTime: { type: String },
+    },
+  ],
   insuranceClaim: String,
   contactDetails: String,
-  doctors:  [doctorSchema] // Field to store doctor references
+  doctors: [doctorSchema], // Field to store doctor references
 });
 
-const Hospital = mongoose.model('Hospital', hospitalSchema);
+const Hospital = mongoose.model("Hospital", hospitalSchema);
 
 export default Hospital;

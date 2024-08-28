@@ -8,17 +8,23 @@ const daysOfWeek = [
 
 const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => {
   const [timings, setTimings] = useState(formData.timings || []);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     handleTimingSlotChange(timings);
-  }, [ timings]);
+  }, [timings]);
 
   const handleAddTimingSlot = () => {
     setTimings([...timings, { days: [], morningStart: '', morningEnd: '', afternoonStart: '', afternoonEnd: '' }]);
   };
 
   const handleRemoveTimingSlot = (index) => {
-    setTimings(timings.filter((_, i) => i !== index));
+    const removedDays = timings[index].days;
+    const newTimings = timings.filter((_, i) => i !== index);
+    const newSelectedDays = selectedDays.filter(day => !removedDays.includes(day));
+    setTimings(newTimings);
+    setSelectedDays(newSelectedDays);
   };
 
   const handleTimingChange = (index, e) => {
@@ -26,17 +32,49 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
     const newTimings = [...timings];
     newTimings[index][name] = value;
     setTimings(newTimings);
+    validateTimingSlot(index, newTimings[index]);
   };
 
   const handleDayChange = (index, day) => {
     const newTimings = [...timings];
-    const selectedDays = newTimings[index].days;
-    if (selectedDays.includes(day)) {
-      newTimings[index].days = selectedDays.filter(d => d !== day);
+    const selectedDaysInSlot = newTimings[index].days;
+    if (selectedDaysInSlot.includes(day)) {
+      newTimings[index].days = selectedDaysInSlot.filter(d => d !== day);
+      setSelectedDays(selectedDays.filter(d => d !== day));
     } else {
       newTimings[index].days.push(day);
+      setSelectedDays([...selectedDays, day]);
     }
     setTimings(newTimings);
+  };
+
+  const validateTimingSlot = (index, timing) => {
+    const errors = {};
+    const { morningStart, morningEnd, afternoonStart, afternoonEnd } = timing;
+
+    if (morningStart && morningEnd) {
+      const morningStartTime = new Date(`1970-01-01T${morningStart}:00`);
+      const morningEndTime = new Date(`1970-01-01T${morningEnd}:00`);
+
+      if (morningEndTime <= morningStartTime) {
+        errors.morning = 'Morning end time must be after start time';
+      } else if ((morningEndTime - morningStartTime) < 1800000) {
+        errors.morning = 'Morning slot must be at least 30 minutes';
+      }
+    }
+
+    if (afternoonStart && afternoonEnd) {
+      const afternoonStartTime = new Date(`1970-01-01T${afternoonStart}:00`);
+      const afternoonEndTime = new Date(`1970-01-01T${afternoonEnd}:00`);
+
+      if (afternoonEndTime <= afternoonStartTime) {
+        errors.afternoon = 'Afternoon end time must be after start time';
+      } else if ((afternoonEndTime - afternoonStartTime) < 1800000) {
+        errors.afternoon = 'Afternoon slot must be at least 30 minutes';
+      }
+    }
+
+    setErrors(prevErrors => ({ ...prevErrors, [index]: errors }));
   };
 
   return (
@@ -61,11 +99,12 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                       key={day}
                       type="button"
                       onClick={() => handleDayChange(index, day)}
+                      disabled={selectedDays.includes(day) && !timing.days.includes(day)}
                       className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full border-2 ${
                         timing.days.includes(day)
                           ? 'bg-docsoGreen text-white border-middleGreen'
                           : 'bg-lightGreen border-gray-400 text-gray-600'
-                      }`}
+                      } ${selectedDays.includes(day) && !timing.days.includes(day) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {day.slice(0, 2)}
                     </button>
@@ -85,6 +124,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
                     required
                   />
+                  {errors[index]?.morning && <p className="text-red-500 text-sm">{errors[index].morning}</p>}
                 </div>
 
                 <div>
@@ -98,6 +138,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
                     required
                   />
+                  {errors[index]?.morning && <p className="text-red-500 text-sm">{errors[index].morning}</p>}
                 </div>
               </div>
 
@@ -113,6 +154,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
                     required
                   />
+                  {errors[index]?.afternoon && <p className="text-red-500 text-sm">{errors[index].afternoon}</p>}
                 </div>
 
                 <div>
@@ -126,6 +168,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
                     required
                   />
+                  {errors[index]?.afternoon && <p className="text-red-500 text-sm">{errors[index].afternoon}</p>}
                 </div>
               </div>
             </div>
@@ -152,7 +195,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
             <button
               type="button"
               onClick={handlePrev}
-              className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+              className="py-3 px-6 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
             >
               Previous
             </button>
@@ -160,6 +203,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
               type="button"
               onClick={handleNext}
               className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
+              disabled={Object.keys(errors).some(index => Object.keys(errors[index]).length > 0)}
             >
               Next
             </button>

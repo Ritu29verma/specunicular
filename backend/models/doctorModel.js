@@ -15,6 +15,7 @@ const doctorSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  hospitalId:{type:String,unique:true},
   registrationNo: { type: String, required: true,unique:true },
   registrationCouncil: { type: String, required: true },
   registrationYear: { type: String, required: true },
@@ -43,8 +44,6 @@ const doctorSchema = new mongoose.Schema({
   consultancyFees: { type: String, required: true },
 });
 
-const Doctor = mongoose.model("Doctor", doctorSchema);
-
 doctorSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
@@ -55,4 +54,6 @@ doctorSchema.pre('save', async function (next) {
     next(err);
   }
 });
+const Doctor = mongoose.model("Doctor", doctorSchema);
+
 export default Doctor;

@@ -80,9 +80,9 @@ const Step2 = ({ formData, handleChange, handleNext, handlePrev }) => {
               <input
                 type="text"
                 id="otherDegree"
-                name="otherDegree"
+                name="degree"
                 placeholder="Specify Degree"
-                value={formData.otherDegree || ''}
+                value={formData.degree || ''}
                 onChange={handleChange}
                 className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 ${
                   errors.otherDegree ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-middleGreen'
