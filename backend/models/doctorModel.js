@@ -6,6 +6,7 @@ const doctorSchema = new mongoose.Schema({
   doctorName: { type: String, required: true }, // Add doctor's name for signup
   phone: { type: String, required: true, unique: true }, // Add mobile number for signup
   category: { type: String, required: true }, // Add category for signup
+  otherCategory: { type: String }, // Add category for signup
   avatar: { type: String }, // Add profile avatar for signup
   password: { type: String, required: true },
   email: {
@@ -18,9 +19,12 @@ const doctorSchema = new mongoose.Schema({
   hospitalId:{type:String,unique:true},
   registrationNo: { type: String, required: true,unique:true },
   registrationCouncil: { type: String, required: true },
+  otherCouncil: { type: String },
   registrationYear: { type: String, required: true },
   degree: { type: String, required: true },
   college: { type: String, required: true },
+  otherCollege: { type: String },
+
   completionYear: { type: String, required: true },
   experience: { type: String, required: true },
   establishmentName: { type: String, required: true },

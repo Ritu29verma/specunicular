@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const HospitalInfo = () => {
   const { id } = useParams();
@@ -34,68 +35,71 @@ const HospitalInfo = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-6 mb-6 max-w-4xl mx-auto">
-        <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+    <>
+    <Navbar showSearch={true} showOther={true} />
+    <div className="min-h-screen bg-lightGreen p-6">
+      <div className="bg-white shadow-2xl rounded-lg p-8 max-w-5xl mx-auto">
+        <h2 className="text-4xl font-bold text-docsoGreen mb-6 text-center">
           {hospital.hospitalName}
         </h2>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Location:</strong> {hospital.city}, {hospital.locality}
-        </p>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Total Beds:</strong> {hospital.totalBeds}
-        </p>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Available Beds:</strong> {hospital.availableBeds}
-        </p>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Category:</strong> {hospital.category}
-        </p>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Specialization:</strong> {hospital.specialization}
-        </p>
-        <p className="text-lg text-gray-700 mb-3">
-          <strong>Description:</strong> {hospital.description}
-        </p>
-        <p className="text-lg text-gray-700 mb-6">
-          <strong>Contact:</strong> {hospital.contactDetails}
-        </p>
-        <p className="text-lg text-gray-700 mb-6">
-          <strong>Insurance Claim:</strong>{" "}
-          {hospital.insuranceClaim ? "Yes" : "No"}
-        </p>
-        <p className="text-lg text-gray-600 mb-2">
-          <strong>Timings of Hospital:</strong>
-        </p>
-        <ul className="list-disc pl-5 text-gray-500">
-          {hospital.timings && Array.isArray(hospital.timings) ? (
-            hospital.timings.map((slot, index) => (
-              <li key={index}>
-                {slot.day}: {slot.startTime} - {slot.endTime}
-              </li>
-            ))
-          ) : (
-            <p className="text-gray-600">No timings available.</p>
-          )}
-        </ul>
+        <div className="space-y-4">
+          <p className="text-lg text-gray-800">
+            <strong>Location:</strong> {hospital.city}, {hospital.locality}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Total Beds:</strong> {hospital.totalBeds}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Available Beds:</strong> {hospital.availableBeds}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Category:</strong> {hospital.category}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Specialization:</strong> {hospital.specialization}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Description:</strong> {hospital.description}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Contact:</strong> {hospital.contactDetails}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Insurance Claim:</strong>{" "}
+            {hospital.insuranceClaim ? "Yes" : "No"}
+          </p>
+          <p className="text-lg text-gray-800">
+            <strong>Timings of Hospital:</strong>
+          </p>
+          <ul className="list-disc pl-5 text-gray-600">
+            {hospital.timings && Array.isArray(hospital.timings) ? (
+              hospital.timings.map((slot, index) => (
+                <li key={index}>
+                  {slot.day}: {slot.startTime} - {slot.endTime}
+                </li>
+              ))
+            ) : (
+              <p className="text-gray-600">No timings available.</p>
+            )}
+          </ul>
+        </div>
 
-        <h3 className="text-3xl font-semibold text-gray-800 mb-4">
+        <h3 className="text-3xl font-semibold text-docsoGreen mt-8 mb-4">
           Doctors at this Hospital:
         </h3>
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {hospital.doctors && Array.isArray(hospital.doctors) && hospital.doctors.length > 0 ? (
             hospital.doctors.map((doctor) => {
-              // Ensure doctor.avatar is defined before using it
               const avatarUrl = doctor.avatar
                 ? doctor.avatar.startsWith("http")
                   ? doctor.avatar
                   : `${baseURL}${doctor.avatar}`
-                : `${baseURL}default-avatar.png`; // Use a default image if avatar is not available
+                : `${baseURL}default-avatar.png`; 
 
               return (
                 <li
                   key={doctor._id}
-                  className="p-4 border border-gray-200 rounded-lg shadow-md bg-white hover:bg-gray-50 transition duration-300 cursor-pointer"
+                  className="p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:bg-green-300 transition duration-300 cursor-pointer"
                   onClick={() => handleDoctorClick(doctor._id)}
                 >
                   <div className="flex items-center mb-4">
@@ -152,6 +156,7 @@ const HospitalInfo = () => {
         </ul>
       </div>
     </div>
+    </>
   );
 };
 
