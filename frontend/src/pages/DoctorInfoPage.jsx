@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const DoctorInfo = () => {
   const { doctorId } = useParams(); // Get the doctorId from the URL
@@ -33,7 +34,9 @@ const DoctorInfo = () => {
   }
 
   return (
-    doctor && (
+    <>
+    <Navbar showSearch={true} showOther={true} className= 'bg-green-300' />
+    {doctor && (
       <div className="container mx-auto p-4">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <div className="flex flex-col md:flex-row items-center md:items-start mb-6 gap-40">
@@ -121,7 +124,10 @@ const DoctorInfo = () => {
           </div>
         </div>
       </div>
+      
     )
+  }
+    </>
   );
 };
 

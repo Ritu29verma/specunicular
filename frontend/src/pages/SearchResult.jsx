@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import DoctorCard from '../components/DoctorCard';
 import HospitalCard from '../components/HospitalCard';
+import Navbar from '../components/Navbar';
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState({ doctors: [], hospitals: [] });
@@ -33,6 +34,8 @@ const SearchResults = () => {
   if (loading) return <p className="text-center text-lg">Loading...</p>;
 
   return (
+    <>
+    <Navbar showSearch={true} showOther={true} />
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4 text-center">Search Results for "{query}"</h1>
       <div>
@@ -59,6 +62,7 @@ const SearchResults = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
