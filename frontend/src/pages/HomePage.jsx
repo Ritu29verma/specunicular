@@ -7,12 +7,11 @@ const HomePage = () => {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar showSearch={true} showOther={true} />
+      <Navbar showSearch={false} showOther={true} />
       <div className="flex flex-1 flex-col items-center justify-center bg-lightGreen py-10">
         <h1 className="text-4xl md:text-5xl font-bold text-docsoGreen mb-8 text-center">Welcome to Docso</h1>
         
         <div className="flex flex-col md:flex-row items-center justify-around w-full max-w-5xl">
-          {/* Doctor and Hospital Registration Boxes */}
           <div className="bg-white shadow-xl rounded-lg p-8 m-4 w-full md:w-2/5 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
             <div className="flex flex-col items-center">
               <img src="https://img.icons8.com/color/96/000000/doctor-male.png" alt="Doctor" className="mb-4 w-24 h-24" />

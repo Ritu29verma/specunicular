@@ -4,7 +4,7 @@ import logo from '../assets/logo.jpg';
 
 const Footer = () => {
   return (
-    <footer className="bg-docsoGreen py-10 mt-10">
+    <footer id= "footer" className="bg-docsoGreen py-10 mt-10">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-5">
 
         <div className="flex flex-col space-y-4">
@@ -21,7 +21,6 @@ const Footer = () => {
           <h2 className="font-bold text-xl text-gray-100">Quick Links</h2>
           <ul className="space-y-2 text-sm text-gray-300">
             <li><a href="/" className="hover:text-white hover:underline">Home</a></li>
-            <li><a href="/about" className="hover:text-white hover:underline">About Us</a></li>
             <li><a href="/services" className="hover:text-white hover:underline">Services</a></li>
             <li><a href="/contact" className="hover:text-white hover:underline">Contact</a></li>
             <li><a href="/faq" className="hover:text-white hover:underline">FAQ</a></li>
@@ -30,8 +29,8 @@ const Footer = () => {
 
         <div className="flex flex-col space-y-4">
           <h2 className="font-bold text-xl text-gray-100">Contact Us</h2>
-          <p className="text-sm text-gray-300">1234 Medical Street, Jhansi</p>
-          <p className="text-sm text-gray-300">Phone: (123) 456-7890</p>
+          <p className="text-sm text-gray-300"> Medical Street, Jhansi</p>
+          <p className="text-sm text-gray-300">Phone: (+91) 73930 43751</p>
           <p className="text-sm text-gray-300">Email: support@docso.com</p>
 
           <div className="flex space-x-4 mt-4">

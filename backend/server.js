@@ -18,11 +18,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-// Middleware
+
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
+    origin: "http://localhost:5173", 
   })
 );
 app.use(fileUpload());

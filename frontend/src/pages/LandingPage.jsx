@@ -21,7 +21,7 @@ function Landingpage() {
     const fetchDoctors = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/doctors/all');
-        setDoctors(response.data.filter(doctor => doctor.isApproved).slice(0, 10)); // Limit to 10
+        setDoctors(response.data.filter(doctor => doctor.isApproved).slice(0, 10)); 
       } catch (error) {
         console.error('Error fetching doctors:', error);
       }
@@ -30,7 +30,7 @@ function Landingpage() {
     const fetchHospitals = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/hospitals/all-hospitals');
-        setHospitals(response.data.slice(0, 10)); // Limit to 10
+        setHospitals(response.data.slice(0, 10)); 
       } catch (error) {
         console.error('Error fetching hospitals:', error);
       }
@@ -79,7 +79,7 @@ function Landingpage() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Navbar showOther={true} showR={true} />
+      <Navbar showOther={true} showR={true}  />
       <Header data={landingPageData.header} />
       <Services data={landingPageData.Services} />
       <div id="services" className="py-16 bg-white">

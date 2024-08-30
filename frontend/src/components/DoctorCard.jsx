@@ -11,7 +11,6 @@ const DoctorCard = ({ doctor }) => {
   const status = doctor.isApproved;
 
   if (!status) {
-    // If the doctor is not approved, don't render the card
     return null;
   }
 
@@ -20,7 +19,7 @@ const DoctorCard = ({ doctor }) => {
 
   return (
     <div
-      className="bg-gradient-to-r from-lightGreen to-middleGreen p-6 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+      className="bg-slate-100 p-6 m-4 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
       onClick={handleCardClick}
     >
       <div className="flex items-center mb-4">

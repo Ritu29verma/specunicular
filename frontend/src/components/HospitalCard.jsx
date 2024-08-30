@@ -10,28 +10,28 @@ const HospitalCard = ({ hospital }) => {
 
   return (
     <div
-      className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-95 transition-all duration-300 ease-in-out cursor-pointer"
+      className="bg-lightGreen p-6 m-4 border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-95 transition-all duration-300 ease-in-out cursor-pointer"
       onClick={handleCardClick}
     >
-      <h3 className="text-xl font-bold text-gray-900 mb-3">{hospital.hospitalName}</h3>
+      <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{hospital.hospitalName}</h3>
       <p className="text-gray-700 text-sm mb-2"><span className="font-semibold">Category:</span> {hospital.category}</p>
       <p className="text-gray-700 text-sm mb-2"><span className="font-semibold">Specialization:</span> {hospital.specialization}</p>
       <p className="text-gray-700 text-sm mb-4"><span className="font-semibold">City:</span> {hospital.city}</p>
 
-      <div className="bg-gray-200 p-3 rounded-lg mb-4">
+      <div className="bg-gray-100 p-3 mb-4">
         <p className="text-gray-800 font-semibold text-sm mb-1">Services:</p>
         <p className="text-gray-600 text-sm">
           {hospital.services}
         </p>
       </div>
 
-      <div className="bg-gray-200 p-3 rounded-lg mb-4">
+      <div className="bg-gray-100 p-3 mb-4">
         <p className="text-gray-800 font-semibold text-sm mb-1">Beds Information:</p>
         <p className="text-gray-600 text-sm"><span className="font-semibold">Total Beds:</span> {hospital.totalBeds}</p>
         <p className="text-gray-600 text-sm"><span className="font-semibold">Available Beds:</span> {hospital.availableBeds}</p>
       </div>
 
-      <div className="bg-gray-200 p-3 rounded-lg">
+      <div className="bg-gray-100 p-3 ">
         <p className="text-gray-800 font-semibold text-sm mb-1">Doctors:</p>
         <ul className="list-disc list-inside text-gray-600 text-sm">
           {hospital.doctors && hospital.doctors.length > 0 ? (

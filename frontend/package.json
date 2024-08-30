@@ -13,7 +13,7 @@
   "dependencies": {
     "@iconify/react": "^5.0.2",
     "axios": "^1.7.4",
-    "babel": "^5.8.38",
+    "babel": "^6.23.0",
     "cloudinary-react": "^1.8.1",
     "country-state-city": "^3.2.1",
     "express": "^4.19.2",

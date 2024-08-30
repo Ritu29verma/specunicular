@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
+import Footer from './Footer';
 
-export default function Navbar({ showLogin, showR, showOther, showSearch }) {
+export default function Navbar({ showAdmin, showR, showOther, showSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
@@ -19,6 +20,20 @@ export default function Navbar({ showLogin, showR, showOther, showSearch }) {
 
   const handleRegisterClick = () => {
     navigate('/home');
+  };
+
+  const handleAdminClick = () => {
+    navigate('/admin');
+  };
+
+  const scrollToFooter = (e) => {
+    e.preventDefault();
+    document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -39,10 +54,10 @@ export default function Navbar({ showLogin, showR, showOther, showSearch }) {
                 <Link to="/">Home</Link>
               </li>
               <li className="hover:text-lightGreen">
-                <Link to="/about">About</Link>
+                <Link to="/" onClick={scrollToServices}> Services </Link>
               </li>
               <li className="hover:text-lightGreen">
-                <Link to="/contact">Contact</Link>
+               <Link to="/" onClick={scrollToFooter}> Contact </Link>
               </li>
             </ul>
           )}
@@ -68,9 +83,11 @@ export default function Navbar({ showLogin, showR, showOther, showSearch }) {
           )}
 
           <div className="hidden md:flex space-x-4">
-            {showLogin && (
-              <button className="text-docsoGreen bg-white px-4 py-2 rounded-md hover:bg-docsoGreen hover:text-white transition duration-300">
-                Login
+            {showAdmin && (
+              <button className="text-docsoGreen bg-white px-4 py-2 rounded-md hover:bg-docsoGreen hover:text-white transition duration-300"
+              onClick={handleAdminClick}
+              >
+                Admin
               </button>
             )}
             {showR && (

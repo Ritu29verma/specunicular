@@ -15,9 +15,9 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrev }) => {
       newErrors.availableBeds = 'Available Beds is required.';
     }
     
-    if (formData.availableBeds > formData.totalBeds) {
-      newErrors.availableBeds = 'Available Beds cannot be greater than Total Beds.';
-    }
+    // if (formData.availableBeds > formData.totalBeds) {
+    //   newErrors.availableBeds = 'Available Beds cannot be greater than Total Beds.';
+    // }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

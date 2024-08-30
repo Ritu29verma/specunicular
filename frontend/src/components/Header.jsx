@@ -1,6 +1,11 @@
 import React from "react";
-
+import { useNavigate, Link } from 'react-router-dom';
 export const Header = (props) => {
+  const navigate = useNavigate();
+  const handleRegisterClick = () => {
+    navigate('/home');
+  };
+
   return (
     <header id="header">
       <div className="intro">
@@ -13,12 +18,12 @@ export const Header = (props) => {
                   <span></span>
                 </h1>
                 <p>{props.data ? props.data.paragraph : "Loading"}</p>
-                <a
-                  href="#features"
-                  className="btn btn-custom btn-lg page-scroll"
+                <button
+                
+                  className="btn btn-custom btn-lg page-scroll" onClick={handleRegisterClick}
                 >
-                  Learn More
-                </a>{" "}
+                  Register Now
+                </button>
               </div>
             </div>
           </div>

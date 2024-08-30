@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const AdminPage = () => {
   const [doctors, setDoctors] = useState([]);
@@ -47,6 +48,8 @@ const AdminPage = () => {
   };
 
   return (
+    <div>
+        <Navbar showOther={true}/>
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
       
@@ -107,6 +110,7 @@ const AdminPage = () => {
         <h2 className="text-2xl font-semibold mb-4">Registered Hospitals</h2>
         {/* Table or list for hospitals can be added similarly */}
       </div>
+    </div>
     </div>
   );
 };
