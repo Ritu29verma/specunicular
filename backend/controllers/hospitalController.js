@@ -1,7 +1,22 @@
 import express from "express";
 import Hospital from "../models/hospitalModel.js";
-
+import path from "path";
+import { fileURLToPath } from "url";
 const router = express.Router();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Function to handle file uploads
+const uploadFile = (file, folder) => {
+  const uploadPath = path.join(__dirname, "../uploads", folder, file.name);
+  file.mv(uploadPath, (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+  return file.name;
+};
+
 
 // Route to register a new hospital
 export const registerHospital = async (req, res) => {
@@ -25,10 +40,15 @@ export const registerHospital = async (req, res) => {
       
     } = req.body;
 
+    const hospitalImage = req.files.hospitalImage
+      ? uploadFile(req.files.hospitalImage, "hospitalImage")
+      : "";
+
     console.log("Received timingSlots:", timings);
 
     const hospital = new Hospital({
       hospitalName,
+      hospitalImage,
       hospitalId,
       category,
       specialization,

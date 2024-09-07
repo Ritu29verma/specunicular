@@ -15,7 +15,7 @@ const DoctorRegistrationForm = () => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
     doctorName: '',
-    category: '',
+    category: [],
     phone: '',
     otherCategory: '',
     avatar: null,
@@ -92,6 +92,24 @@ const DoctorRegistrationForm = () => {
     }));
   };
 
+  const handleMultiSelectChange = (e) => {
+    const { options } = e.target;
+    const selectedValues = [];
+    
+    // Loop through all options and push the selected values
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedValues.push(options[i].value);
+      }
+    }
+  
+    // Update the formData state with the selected categories
+    setFormData({
+      ...formData,
+      category: selectedValues,
+    });
+  };
+
 
   const handleTimingSlotChange = (updatedSlots) => {
     setFormData({
@@ -159,6 +177,7 @@ const DoctorRegistrationForm = () => {
           formData={formData}
           setFormData={setFormData}
           handleChange={handleChange}
+          handleMultiSelectChange={handleMultiSelectChange}
           handleNext={handleNext}
         />
       )}

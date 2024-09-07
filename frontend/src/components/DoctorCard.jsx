@@ -15,9 +15,9 @@ const DoctorCard = ({ doctor }) => {
   }
 
   // Construct the full URL for the avatar image
-  const baseURL = "http://localhost:5000/uploads/avatar/"; // Adjust based on your server configuration
+  const baseURL = "http://localhost:5000/uploads/avatar/"; 
   const isFullURL = doctor.avatar.startsWith('http');
-  const avatarUrl = isFullURL ? doctor.avatar : `${baseURL}${doctor.avatar}`; // Use full URL if available
+  const avatarUrl = isFullURL ? doctor.avatar : `${baseURL}${doctor.avatar}`;
 
   return (
     <div

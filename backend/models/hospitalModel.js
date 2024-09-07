@@ -42,6 +42,7 @@ const doctorSchema = new mongoose.Schema({
 
 const hospitalSchema = new mongoose.Schema({
   hospitalName: { type: String, required: true },
+  hospitalImage:{type:String},
   hospitalId: { type: String, unique: true },
   category: String,
   specialization: String,

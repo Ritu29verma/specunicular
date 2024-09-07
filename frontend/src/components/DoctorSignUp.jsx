@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import Modal from '../components/Model.jsx';
 
-const SignUp = ({ formData, handleChange, handleNext }) => {
+const SignUp = ({ formData, handleChange, handleNext,handleMultiSelectChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSignUp = () => {
@@ -54,8 +54,9 @@ const SignUp = ({ formData, handleChange, handleNext }) => {
             id="category"
             name="category"
             value={formData.category}
-            onChange={handleChange}
+            onChange={handleMultiSelectChange}
             required
+            multiple
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
           >
             <option value="">Select Category</option>

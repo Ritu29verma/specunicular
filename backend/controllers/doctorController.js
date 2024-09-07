@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import sendApprovalEmail from "../services/emailService.js";
+import { sendRejectionEmail } from "../services/emailService.js";
 import Hospital from "../models/hospitalModel.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -57,6 +58,8 @@ export const registerDoctor = async (req, res) => {
       consultancyFees,
     } = req.body;
 
+    const categories = Array.isArray(category) ? category : [category];
+
     console.log("Received timingSlots:", timingSlots);
 
     // Handle file uploads
@@ -76,7 +79,8 @@ export const registerDoctor = async (req, res) => {
     // Create new doctor record
     const doctor = new Doctor({
       doctorName,
-      category,
+      category:categories,
+      avatar,
       phone,
       otherCategory,
       password,
@@ -102,6 +106,9 @@ export const registerDoctor = async (req, res) => {
       email,
       timingSlots: JSON.parse(timingSlots || '[]'), // Default to empty array if timingSlots is not provided
       consultancyFees,
+      identityProof,
+      medicalRegistrationProof,
+      establishmentProof
     });
 
     // Save doctor to database
@@ -179,6 +186,34 @@ export const approveDoctor = async (req, res) => {
   } catch (error) {
     console.error("Error approving doctor:", error);
     res.status(500).json({ message: "Error approving doctor", error: error.message });
+  }
+};
+
+export const rejectDoctor = async (req, res) => {
+  try {
+    const doctorId = req.params.id;
+    const { customMessage } = req.body; // Get custom message from request body
+
+    const doctor = await Doctor.findById(doctorId);
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    if (!doctor.isApproved) {
+      return res.status(400).json({ message: "Doctor is already rejected" });
+    }
+
+    doctor.isApproved = false; // Mark doctor as rejected
+    await doctor.save();
+
+    // Send the rejection email with the custom message
+    await sendRejectionEmail(doctor, customMessage);
+
+    res.status(200).json({ message: "Doctor rejected successfully" });
+  } catch (error) {
+    console.error("Error rejecting doctor:", error);
+    res.status(500).json({ message: "Error rejecting doctor", error: error.message });
   }
 };
 

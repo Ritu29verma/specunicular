@@ -18,7 +18,7 @@ const sendApprovalEmail = async (doctor) => {
     from: process.env.EMAIL_USER,
     to: doctor.email, // Recipient's email
     subject: 'Doctor Registration Approved',
-    text: `Dear Dr. ${doctor.name},
+    text: `Dear Dr. ${doctor.doctorName},
 
 Your registration has been approved successfully.
 
@@ -31,6 +31,30 @@ Admin Team`,
     console.log('Approval email sent successfully');
   } catch (error) {
     console.error('Error sending email:', error);
+  }
+};
+export const sendRejectionEmail = async (doctor, customMessage) => {
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: doctor.email, // Doctor's email
+    subject: "Rejection of Doctor Application",
+    text: `Dear Dr. ${doctor.doctorName},
+
+    We regret to inform you that your application has been rejected.
+
+    Reason: ${customMessage}
+
+    Best regards,
+    Medical Team`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Rejection email sent successfully to", doctor.email);
+  } catch (error) {
+    console.error("Error sending rejection email:", error);
+    throw new Error("Error sending rejection email");
   }
 };
 
