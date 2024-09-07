@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 const doctorSchema = new mongoose.Schema({
   doctorName: { type: String, required: true }, // Add doctor's name for signup
-  phone: { type: String, required: true, unique: true }, // Add mobile number for signup
+  phone: { type: Number , required: true, unique: true }, // Add mobile number for signup
   category: { type: String, required: true }, // Add category for signup
   otherCategory: { type: String }, // Add category for signup
   avatar: { type: String }, // Add profile avatar for signup
@@ -22,14 +22,22 @@ const doctorSchema = new mongoose.Schema({
   otherCouncil: { type: String },
   registrationYear: { type: String, required: true },
   degree: { type: String, required: true },
+  otherDegree: { type: String },
   college: { type: String, required: true },
   otherCollege: { type: String },
 
   completionYear: { type: String, required: true },
-  experience: { type: String, required: true },
+  experience: { type: String , required: true },
   establishmentName: { type: String, required: true },
   city: { type: String, required: true },
   state: { type: String, required: true },
+  landmark: { type: String, required: true },
+  address: { type: String, required: true },
+  pincode: { type: Number, required: true },
+  latitude: { type: Number, required: true },
+  longitude: { type: Number, required: true },
+  address : { type: String, required: true },
+  pincode : { type: Number , required: true},
   identityProof: { type: String, required: true },
   medicalRegistrationProof: { type: String, required: true },
   establishmentProof: { type: String, required: true },
@@ -45,7 +53,7 @@ const doctorSchema = new mongoose.Schema({
       afternoonEnd: { type: String },
     },
   ],
-  consultancyFees: { type: String, required: true },
+  consultancyFees: { type: Number , required: true },
 });
 
 doctorSchema.pre('save', async function (next) {

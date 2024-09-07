@@ -35,7 +35,7 @@ const Step8 = ({ formData, handleChange, handlePrev }) => (
           </div>
         </div>
 
-        <div className="mt-6 flex justify-between w-full max-w-md mx-auto">
+        <div className="mt-6 flex  justify-between w-full max-w-md mx-auto">
           <button
             type="button"
             onClick={handlePrev}

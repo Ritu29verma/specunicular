@@ -17,19 +17,29 @@ const DoctorRegistrationForm = () => {
     doctorName: '',
     category: '',
     phone: '',
+    otherCategory: '',
     avatar: null,
     password : '',
     hospitalId: '',
     registrationNo: "",
     registrationCouncil: "",
+    otherCouncil:"",
     registrationYear: "",
     degree: "",
+    otherDegree:"",
     college: "",
+    otherCollege:"",
     completionYear: "",
     experience: "",
     establishmentName: "",
     city: "",
-    State: "",
+    state: "",
+    landmark:"",
+    address:"",
+    pincode:"",
+    latitude: '',
+    longitude: '',
+    email:'',
     identityProof: null,
     medicalRegistrationProof: null,
     establishmentProof: null,
@@ -74,6 +84,14 @@ const DoctorRegistrationForm = () => {
       });
     }
   };
+
+  const handleChange2 = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
 
   const handleTimingSlotChange = (updatedSlots) => {
     setFormData({
@@ -161,10 +179,11 @@ const DoctorRegistrationForm = () => {
             handlePrev={handlePrev}
           />
         )}
-        {step === 3 && (
+       {step === 3 && (
           <Step3
             formData={formData}
             handleChange={handleChange}
+            handleChange2={handleChange2}
             handleNext={handleNext}
             handlePrev={handlePrev}
           />

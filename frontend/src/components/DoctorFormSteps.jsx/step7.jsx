@@ -7,7 +7,13 @@ const daysOfWeek = [
 ];
 
 const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => {
-  const [timings, setTimings] = useState(formData.timings || []);
+  const [timings, setTimings] = useState(formData.timings || [{
+    days: [], 
+    morningStart: '', 
+    morningEnd: '', 
+    afternoonStart: '', 
+    afternoonEnd: ''
+  }]);
   const [selectedDays, setSelectedDays] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -16,8 +22,52 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
   }, [timings]);
 
   const handleAddTimingSlot = () => {
-    setTimings([...timings, { days: [], morningStart: '', morningEnd: '', afternoonStart: '', afternoonEnd: '' }]);
+    const newErrors = { ...errors }; // Copy existing errors
+    
+    // Check if any timing slot fields are empty
+    if (selectedDays.length === 0) {
+      newErrors.selectedDays = "Please select at least one day.";
+    } else {
+      delete newErrors.selectedDays; // Clear the error for selectedDays if days are selected
+    }
+  
+    const lastTiming = timings[timings.length - 1] || {}; // Get the last timing slot
+  
+    // Validate each timing field (morning start, morning end, afternoon start, afternoon end)
+    if (!lastTiming.morningStart) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].morningStart = "Session 1 Start time is required";
+    }
+    if (!lastTiming.morningEnd) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].morningEnd = "Session 1 End time is required";
+    }
+    if (!lastTiming.afternoonStart) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].afternoonStart = "Session 2 Start time is required";
+    }
+    if (!lastTiming.afternoonEnd) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].afternoonEnd = "Session 2 End time is required";
+    }
+  
+    // If there are no errors, add a new timing slot
+    if (!newErrors.selectedDays && !Object.keys(newErrors[timings.length - 1] || {}).length) {
+      setTimings([
+        ...timings,
+        {
+          days: [],
+          morningStart: '',
+          morningEnd: '',
+          afternoonStart: '',
+          afternoonEnd: '',
+        },
+      ]);
+    }
+  
+    setErrors(newErrors); // Update the errors state
   };
+  
 
   const handleRemoveTimingSlot = (index) => {
     const removedDays = timings[index].days;
@@ -82,7 +132,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
       <Navbar showLogin={false} showLogout={false} />
       <ProgressBar step={7} totalSteps={8} />
       <div className="max-w-4xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
-
+           <div>
         <h2 className="text-2xl font-bold text-docsoGreen mb-6">Set Establishment Timing</h2>
         <p className="text-gray-700 mb-8">
           Please provide the available timing slots. You can specify multiple days and the start and end times for each slot, including separate timings for morning and afternoon.
@@ -92,7 +142,9 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
           <div key={index} className="mb-6 p-6 bg-lightGreen shadow-sm rounded-lg">
             <div className="grid gap-6">
               <div>
-                <label className="block text-docsoGreen font-semibold mb-2">Select Days</label>
+                <label className="block text-docsoGreen font-semibold mb-2">Select Days
+                </label>
+                
                 <div className="flex flex-wrap gap-2">
                   {daysOfWeek.map(day => (
                     <button
@@ -114,7 +166,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
 
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor={`morningStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Morning Start Time</label>
+                  <label htmlFor={`morningStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Session 1 Start time</label>
                   <input
                     type="time"
                     id={`morningStart_${index}`}
@@ -125,10 +177,11 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     required
                   />
                   {errors[index]?.morning && <p className="text-red-500 text-sm">{errors[index].morning}</p>}
+                  {errors[index]?.morningStart && <p className="text-red-500 text-sm">{errors[index].morningStart}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor={`morningEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Morning End Time</label>
+                  <label htmlFor={`morningEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Sesson 1 End time</label>
                   <input
                     type="time"
                     id={`morningEnd_${index}`}
@@ -139,12 +192,13 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     required
                   />
                   {errors[index]?.morning && <p className="text-red-500 text-sm">{errors[index].morning}</p>}
+                  {errors[index]?.morningEnd && <p className="text-red-500 text-sm">{errors[index].morningEnd}</p>}
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor={`afternoonStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Afternoon Start Time</label>
+                  <label htmlFor={`afternoonStart_${index}`} className="block text-docsoGreen font-semibold mb-2">Sesson 2 Start time</label>
                   <input
                     type="time"
                     id={`afternoonStart_${index}`}
@@ -154,11 +208,11 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-middleGreen"
                     required
                   />
-                  {errors[index]?.afternoon && <p className="text-red-500 text-sm">{errors[index].afternoon}</p>}
+                    {errors[index]?.afternoonStart && <p className="text-red-500 text-sm">{errors[index].afternoonStart}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor={`afternoonEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Afternoon End Time</label>
+                  <label htmlFor={`afternoonEnd_${index}`} className="block text-docsoGreen font-semibold mb-2">Sesson 2 End time</label>
                   <input
                     type="time"
                     id={`afternoonEnd_${index}`}
@@ -169,8 +223,11 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                     required
                   />
                   {errors[index]?.afternoon && <p className="text-red-500 text-sm">{errors[index].afternoon}</p>}
+                  {errors[index]?.afternoonEnd && <p className="text-red-500 text-sm">{errors[index].afternoonEnd}</p>}
                 </div>
               </div>
+
+              
             </div>
 
             <button
@@ -183,31 +240,35 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
           </div>
         ))}
 
-        <div className="flex justify-between mt-8">
-          <button
+      <div>
+        <button
             type="button"
             onClick={handleAddTimingSlot}
             className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
           >
             Add Timing Slot
           </button>
-          <div className="flex space-x-4">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="py-3 px-6 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
-              disabled={Object.keys(errors).some(index => Object.keys(errors[index]).length > 0)}
-            >
-              Next
-            </button>
-          </div>
+          {errors.selectedDays && <p className="text-red-500 mt-2">{errors.selectedDays}</p>}
+        </div> 
+</div>
+        <div className="flex mt-8 ">
+       
+        <div className="mt-6 flex justify-between w-full max-w-full mx-auto">
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="bg-gray-400 text-white px-6 py-2 rounded-md hover:bg-gray-500 transition duration-300"
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            className="bg-docsoGreen text-white px-6 py-2 rounded-md hover:bg-middleGreen transition duration-300"
+          >
+            Next
+          </button>
+        </div>
         </div>
       </div>
     </div>

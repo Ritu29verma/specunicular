@@ -18,14 +18,14 @@ const Step5 = ({ handleChange, handleNext, handlePrev }) => (
           and ensure the authenticity of your profile.
         </p>
 
-        <p className="text-gray-700 mb-6">
+        <div className="text-gray-700 mb-6">
           Acceptable documents:
           <ul className="list-disc list-inside mt-2">
             <li>Medical Registration Certificate</li>
             <li>State Medical Council ID</li>
             <li>Any other relevant medical registration document</li>
           </ul>
-        </p>
+        </div>
 
         <div className="flex justify-center">
           <div className="w-full max-w-md">

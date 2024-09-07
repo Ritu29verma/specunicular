@@ -29,6 +29,7 @@ const Step4 = ({ handleChange, handleNext, handlePrev }) => (
           <label htmlFor="identityProof" className="block text-lg font-semibold text-docsoGreen mb-2">
             Upload Identity Proof
           </label>
+          <span className='text-xs text-gray-600  font-normal'> Upload Front View </span>
           <input
             type="file"
             id="identityProof"
@@ -38,6 +39,20 @@ const Step4 = ({ handleChange, handleNext, handlePrev }) => (
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
           />
         </div>
+
+
+        {/* <div className="mb-6">
+        <span className='text-xs text-gray-600  font-normal'> Upload Back View </span>
+          <input
+            type="file"
+            id="identityProof"
+            name="identityProof"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+          />
+        </div> */}
+
 
         <div className="flex justify-between mt-8">
           <button
