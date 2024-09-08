@@ -53,7 +53,7 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
           const { latitude, longitude } = position.coords;
           setLatitude(latitude);
           setLongitude(longitude);
-          setLocationText("Live Location");
+          setLocationText(`Live Location`);
         },
         (error) => {
           switch (error.code) {
@@ -61,13 +61,13 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
               setLocationText("Permission denied. Please enable location access.");
               break;
             case error.POSITION_UNAVAILABLE:
-              setLocationText("Location information is unavailable. Please enter your landmark manually.");
+              setLocationText("Location information is unavailable. Please enter your location manually.");
               break;
             case error.TIMEOUT:
               setLocationText("The request to get your location timed out.");
               break;
             default:
-              setLocationText("An error occurred.");
+              setLocationText("An unknown error occurred.");
               break;
           }
         }
@@ -95,17 +95,17 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
           setLongitude(parseFloat(lon));
 
 
-          setLocationText("Manual Location");
+          setLocationText(`Manual Location`);
 
 
           handleChange('latitude', parseFloat(lat));
           handleChange('longitude', parseFloat(lon));
         } else {
-          setLocationText('Location not found. Please try a different landmark...');
+          setLocationText('Please wait or try a different Landmark...');
         }
       })
       .catch(error => {
-        setLocationText('Network Problem...');
+        setLocationText('Network error...');
       });
     }
   }, [landmark, city, handleChange, dragged]);
@@ -115,7 +115,7 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
     setLatitude(lat);
     setLongitude(lng);
     setDragged(true); 
-    setLocationText("Pinpoint Location");
+    setLocationText(`Pinpoint Location`);
 
 
     handleChange('latitude', lat);
@@ -124,7 +124,7 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
 
   return (
     <div>
-       <div className="p-4 bg-white rounded-lg shadow-lg border border-gray-300">
+      <div className="p-4 bg-white rounded-lg shadow-lg border border-gray-300">
       <h3 className="text-xl font-semibold text-middleGreen mb-4"> { locationText}  </h3>
       <p className="text-gray-700">
         <span className="font-medium">Latitude:</span> {latitude}
@@ -134,7 +134,7 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
       </p>
     </div>
       {latitude && longitude && (
-        <MapContainer center={[latitude, longitude]} zoom={15} >
+        <MapContainer center={[latitude, longitude]} zoom={15} style={{ height: '400px', width: '100%', marginTop: '20px' }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -151,6 +151,9 @@ const MapLocationPicker = ({ landmark, city, formData, handleChange }) => {
               }
             }}
           >
+            <Popup>
+              Location: {locationText}
+            </Popup>
           </Marker>
         </MapContainer>
       )}

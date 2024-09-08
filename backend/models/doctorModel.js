@@ -12,6 +12,8 @@ const doctorSchema = new mongoose.Schema({
   otherCategory: { type: String }, // Add category for signup
   avatar: { type: String }, // Add profile avatar for signup
   password: { type: String, required: true },
+  dob: { type: String, required: true },
+  gender : { type: String, required: true },
   email: {
     type: String,
     required: true, // Ensure the email field is required
@@ -42,6 +44,7 @@ const doctorSchema = new mongoose.Schema({
   address: { type: String, required: true },
   pincode: { type: Number, required: true },
   identityProof: { type: String, required: true },
+  identityProof2: { type: String, required: true }, 
   medicalRegistrationProof: { type: String, required: true },
   establishmentProof: { type: String, required: true },
   isApproved: { type: Boolean, default: false },

@@ -1,3 +1,5 @@
+
+
 import Doctor from "../models/doctorModel.js";
 import mongoose from "mongoose";
 import path from "path";
@@ -34,6 +36,8 @@ export const registerDoctor = async (req, res) => {
       phone,
       otherCategory,
       password,
+      dob,
+      gender,
       hospitalId,
       registrationNo,
       registrationCouncil,
@@ -66,6 +70,9 @@ export const registerDoctor = async (req, res) => {
     const identityProof = req.files.identityProof
       ? uploadFile(req.files.identityProof, "identityProof")
       : "";
+      const identityProof2 = req.files.identityProof2
+      ? uploadFile(req.files.identityProof2, "identityProof2")
+      : "";
     const avatar = req.files.avatar
       ? uploadFile(req.files.avatar, "avatar")
       : "";
@@ -84,6 +91,8 @@ export const registerDoctor = async (req, res) => {
       phone,
       otherCategory,
       password,
+      dob,
+      gender,
       hospitalId,
       registrationNo,
       registrationCouncil,
@@ -107,6 +116,7 @@ export const registerDoctor = async (req, res) => {
       timingSlots: JSON.parse(timingSlots || '[]'), // Default to empty array if timingSlots is not provided
       consultancyFees,
       identityProof,
+      identityProof2,
       medicalRegistrationProof,
       establishmentProof
     });
@@ -153,6 +163,7 @@ export const getAllDoctors = async (req, res) => {
       doctors.map((doctor) => ({
         ...doctor._doc,
         identityProof: doctor.identityProof ? `${baseUrl}identityProof/${doctor.identityProof}` : "",
+        identityProof2: doctor.identityProof2 ? `${baseUrl}identityProof2/${doctor.identityProof2}` : "",
         medicalRegistrationProof: doctor.medicalRegistrationProof ? `${baseUrl}medicalRegistrationProof/${doctor.medicalRegistrationProof}` : "",
         establishmentProof: doctor.establishmentProof ? `${baseUrl}establishmentProof/${doctor.establishmentProof}` : "",
         avatar: doctor.avatar ? `${baseUrl}avatar/${doctor.avatar}` : "",

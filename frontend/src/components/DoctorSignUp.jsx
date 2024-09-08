@@ -45,6 +45,7 @@ const SignUp = ({ formData, handleChange, handleNext,handleMultiSelectChange }) 
         />
       </div>
 
+   
       <div>
         <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
           Select Your Category
@@ -54,9 +55,8 @@ const SignUp = ({ formData, handleChange, handleNext,handleMultiSelectChange }) 
             id="category"
             name="category"
             value={formData.category}
-            onChange={handleMultiSelectChange}
+            onChange={handleChange}
             required
-            multiple
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
           >
             <option value="">Select Category</option>
@@ -96,6 +96,40 @@ const SignUp = ({ formData, handleChange, handleNext,handleMultiSelectChange }) 
             />
           </div>
         )}
+      </div>
+      <div>
+        <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-2">
+          D.O.B.
+        </label>
+        <input
+          type="text"
+          id="dob"
+          name="dob"
+          placeholder="DD-MM-YYYY"
+          value={formData.dob}
+          onChange={handleChange}
+          required
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
+          Select Your Gender
+        </label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-middleGreen"
+          >
+            <option value="">Select Category</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
       </div>
 
       <div>
