@@ -173,7 +173,7 @@ const DoctorRegistrationForm = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/doctors/register",
+        `${import.meta.env.VITE_BASE_URL}/api/doctors/register`,
         formDataToSubmit,
         {
           headers: {

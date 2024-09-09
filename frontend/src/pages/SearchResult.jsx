@@ -16,7 +16,7 @@ const SearchResults = () => {
       const fetchResults = async () => {
         try {
           setLoading(true);
-          const { data } = await axios.get(`http://localhost:5000/api/search`, {
+          const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/search`, {
             params: { query }
           });
           setSearchResults(data);

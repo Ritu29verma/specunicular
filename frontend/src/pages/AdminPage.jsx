@@ -11,12 +11,13 @@ const AdminPage = ({ doctor }) => {
   const [rejectedDoctorId, setRejectedDoctorId] = useState(null);
   const navigate = useNavigate();
 
+  // Use the environment variable here
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/doctors/all"
-        );
+        const response = await axios.get(`${baseUrl}/api/doctors/all`);
         setDoctors(response.data);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -24,9 +25,7 @@ const AdminPage = ({ doctor }) => {
     };
     const fetchHospitals = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/hospitals/all-hospitals"
-        );
+        const response = await axios.get(`${baseUrl}/api/hospitals/all-hospitals`);
         setHospitals(response.data);
       } catch (error) {
         console.error("Error fetching hospitals:", error);
@@ -35,11 +34,11 @@ const AdminPage = ({ doctor }) => {
 
     fetchDoctors();
     fetchHospitals();
-  }, []);
+  }, [baseUrl]);
 
   const handleApprove = async (doctorId) => {
     try {
-      await axios.post(`http://localhost:5000/api/doctors/${doctorId}/approve`);
+      await axios.post(`${baseUrl}/api/doctors/${doctorId}/approve`);
       setDoctors(
         doctors.map((doctor) =>
           doctor._id === doctorId ? { ...doctor, isApproved: true } : doctor
@@ -52,12 +51,9 @@ const AdminPage = ({ doctor }) => {
 
   const handleReject = async (doctorId) => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/api/doctors/${doctorId}/reject`,
-        {
-          customMessage,
-        }
-      );
+      const response = await axios.post(`${baseUrl}/api/doctors/${doctorId}/reject`, {
+        customMessage,
+      });
       console.log(response.data.message); // Success message
       setCustomMessage("");
       setRejectedDoctorId(null);

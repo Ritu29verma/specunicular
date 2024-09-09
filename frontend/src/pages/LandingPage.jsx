@@ -20,7 +20,7 @@ function Landingpage() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/doctors/all');
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/doctors/all`);
         setDoctors(response.data.filter(doctor => doctor.isApproved).slice(0, 10)); 
       } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -29,7 +29,7 @@ function Landingpage() {
 
     const fetchHospitals = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/hospitals/all-hospitals');
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/hospitals/all-hospitals`);
         setHospitals(response.data.slice(0, 10)); 
       } catch (error) {
         console.error('Error fetching hospitals:', error);

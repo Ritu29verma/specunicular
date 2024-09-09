@@ -116,7 +116,7 @@ const HospitalRegistrationForm = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/hospitals/register-hospital",
+        `${import.meta.env.VITE_BASE_URL}/api/hospitals/register-hospital`,
         dataToSubmit
       );
       alert("Hospital registered successfully!");

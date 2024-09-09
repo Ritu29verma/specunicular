@@ -13,7 +13,7 @@ const HospitalInfo = () => {
     const fetchHospital = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/hospitals/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/hospitals/${id}`
         );
         setHospital(response.data);
       } catch (error) {
@@ -28,7 +28,7 @@ const HospitalInfo = () => {
     navigate(`/doctor/${doctorId}`);
   };
 
-  const baseURL = "http://localhost:5000/uploads/avatar/"; // Adjust based on your server
+  const baseURL = `${import.meta.env.VITE_BASE_URL}/uploads/avatar/`; // Adjust based on your server
 
   if (!hospital) {
     return <p className="text-center text-lg">Loading...</p>;

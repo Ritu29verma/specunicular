@@ -13,7 +13,7 @@ const DoctorInfo = () => {
     const fetchDoctor = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/doctors/${doctorId}`
+          `${import.meta.env.VITE_BASE_URL}/api/doctors/${doctorId}`
         );
         setDoctor(response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const DoctorInfo = () => {
           <div className="bg-white shadow-lg rounded-lg p-6">
             <div className="flex flex-col md:flex-row items-center md:items-start mb-6 gap-40">
               <img
-                src={`http://localhost:5000/uploads/avatar/${doctor.avatar}`}
+                src={`${import.meta.env.VITE_BASE_URL}/uploads/avatar/${doctor.avatar}`}
                 alt={doctor.doctorName}
                 className=" m-4 w-52 h-60 rounded-md object-cover mb-4 md:mb-0 md:mr-6"
               />
@@ -133,7 +133,7 @@ const DoctorInfo = () => {
                 {doctor.establishmentProof && (
                   <div className="proof-image">
                     <img
-                      src={`http://localhost:5000/uploads/establishmentProof/${doctor.establishmentProof}`}
+                      src={`${import.meta.env.VITE_BASE_URL}/uploads/establishmentProof/${doctor.establishmentProof}`}
                       alt="Establishment Proof"
                       className="w-full h-auto rounded-md shadow-md"
                     />
@@ -143,7 +143,7 @@ const DoctorInfo = () => {
                 {doctor.identityProof && (
                   <div className="proof-image">
                     <img
-                      src={`http://localhost:5000/uploads/identityProof/${doctor.identityProof}`}
+                      src={`${import.meta.env.VITE_BASE_URL}/uploads/identityProof/${doctor.identityProof}`}
                       alt="Identity Proof"
                       className="w-full h-auto rounded-md shadow-md"
                     />
@@ -153,7 +153,7 @@ const DoctorInfo = () => {
                 {doctor.medicalRegistrationProof && (
                   <div className="proof-image">
                     <img
-                      src={`http://localhost:5000/uploads/medicalRegistrationProof/${doctor.medicalRegistrationProof}`}
+                      src={`${import.meta.env.VITE_BASE_URL}/uploads/medicalRegistrationProof/${doctor.medicalRegistrationProof}`}
                       alt="Medical Registration Proof"
                       className="w-full h-auto rounded-md shadow-md"
                     />
