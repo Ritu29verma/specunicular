@@ -6,17 +6,64 @@ const daysOfWeek = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
 
-const Step5 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => {
-  const [timings, setTimings] = useState(formData.timings || []);
+const Step5 = ({ formData, handleTimingSlotChange, handleNext, handlePrev, handleChange }) => {
+  // Initialize with default empty timing slot if formData.timings is not provided or empty
+  const [timings, setTimings] = useState(formData.timings || [{
+    days: [], 
+    startTime: '', 
+    endTime: '', 
+  }]);
   const [selectedDays, setSelectedDays] = useState([]);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    console.log('Initial formData.timings:', formData.timings);
     handleTimingSlotChange(timings);
   }, [timings]);
 
+  // Make sure at least one timing slot is present on first render
+  useEffect(() => {
+    if (timings.length === 0) {
+      setTimings([{
+        days: [],
+        startTime: '',
+        endTime: '',
+      }]);
+    }
+  }, []); // Empty dependency array ensures this runs only once after initial render
+
   const handleAddTimingSlot = () => {
-    setTimings([...timings, { days: [], startTime: '', endTime: '' }]);
+    const newErrors = { ...errors };
+    
+    if (selectedDays.length === 0) {
+      newErrors.selectedDays = "Please select at least one day.";
+    } else {
+      delete newErrors.selectedDays;
+    }
+  
+    const lastTiming = timings[timings.length - 1] || {};
+  
+    if (!lastTiming.startTime) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].startTime = "Start time is required";
+    }
+    if (!lastTiming.endTime) {
+      newErrors[timings.length - 1] = newErrors[timings.length - 1] || {};
+      newErrors[timings.length - 1].endTime = "End time is required";
+    }
+  
+    if (!newErrors.selectedDays && !Object.keys(newErrors[timings.length - 1] || {}).length) {
+      setTimings([
+        ...timings,
+        {
+          days: [],
+          startTime: '',
+          endTime: '',
+        },
+      ]);
+    }
+  
+    setErrors(newErrors);
   };
 
   const handleRemoveTimingSlot = (index) => {
@@ -66,17 +113,14 @@ const Step5 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
     setErrors(prevErrors => ({ ...prevErrors, [index]: errors }));
   };
   
-
+  
   return (
     <div className="min-h-screen bg-lightGreen">
       <Navbar showLogin={false} showLogout={false} />
-      <ProgressBar step={7} totalSteps={8} />
+      <ProgressBar step={5} totalSteps={8} />
       <div className="max-w-4xl mx-auto p-6 mt-8 bg-white shadow-md rounded-lg">
-
         <h2 className="text-2xl font-bold text-docsoGreen mb-6">Set Establishment Timing</h2>
-        <p className="text-gray-700 mb-8">
-          Please provide the available timing slots. You can specify multiple days and the start and end times for each slot.
-        </p>
+        <p className="text-gray-700 mb-8">Please provide the available timing slots.</p>
 
         {timings.map((timing, index) => (
           <div key={index} className="mb-6 p-6 bg-lightGreen shadow-sm rounded-lg">
@@ -140,18 +184,39 @@ const Step5 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
             >
               Remove
             </button>
+
+            
           </div>
+          
         ))}
 
-        <div className="flex justify-between mt-8">
-          <button
+<button
             type="button"
             onClick={handleAddTimingSlot}
             className="py-3 px-6 bg-docsoGreen text-white font-semibold rounded-lg hover:bg-middleGreen focus:outline-none focus:ring-2 focus:ring-middleGreen"
           >
             Add Timing Slot
           </button>
-          <div className="flex space-x-4">
+          {errors.selectedDays && <p className="text-red-500 mt-2">{errors.selectedDays}</p>}
+
+
+          <div className="mt-4">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange} 
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        {/* <div className="flex mt-8 ">
+        <div className="mt-6 flex justify-between w-full max-w-full mx-auto">
+          <div className=" space-x-4">
             <button
               type="button"
               onClick={handlePrev}
@@ -168,7 +233,29 @@ const Step5 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
               Next
             </button>
           </div>
+          </div>
+        </div> */}
+
+<div className="flex mt-8 ">
+        <div className="mt-6 flex justify-between w-full max-w-full mx-auto">
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="bg-gray-400 text-white px-6 py-2 rounded-md hover:bg-gray-500 transition duration-300"
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            className="bg-docsoGreen text-white px-6 py-2 rounded-md hover:bg-middleGreen transition duration-300"
+            disabled={Object.keys(errors).some(index => Object.keys(errors[index]).length > 0)}
+          >
+            Next
+          </button>
         </div>
+        </div>
+     
       </div>
     </div>
   );

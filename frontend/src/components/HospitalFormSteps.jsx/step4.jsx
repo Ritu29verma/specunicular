@@ -32,12 +32,12 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrev }) => {
         
         <div>
           <div className="m-6">
-            <label htmlFor="totalDoctorStaff" className="block text-docsoGreen font-semibold mb-2">Total Doctor Staff</label>
+            <label htmlFor="totalDoctorStaff" className="block text-docsoGreen font-semibold mb-2">Total Doctors </label>
             <input
               type="number"
               id="totalDoctorStaff"
               name="totalDoctorStaff"
-              placeholder="Enter total doctor staff"
+              placeholder="Enter total doctors"
               value={formData.totalDoctorStaff}
               onChange={handleChange}
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
@@ -49,12 +49,12 @@ const Step4 = ({ formData, handleChange, handleNext, handlePrev }) => {
           </div>
 
           <div className="m-6">
-            <label htmlFor="nursingStaff" className="block text-docsoGreen font-semibold mb-2">Nursing Staff</label>
+            <label htmlFor="nursingStaff" className="block text-docsoGreen font-semibold mb-2">Total Nurses </label>
             <input
               type="number"
               id="nursingStaff"
               name="nursingStaff"
-              placeholder="Enter nursing staff"
+              placeholder="Enter total Nurses "
               value={formData.nursingStaff}
               onChange={handleChange}
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${

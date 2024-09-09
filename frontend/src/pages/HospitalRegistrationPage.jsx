@@ -12,14 +12,17 @@ const HospitalRegistrationForm = () => {
   const [formData, setFormData] = useState({
     hospitalName: "",
     hospitalId: "",
+    // hospitalImage : null ,
     category: "",
-    specialization: "",
-    services: "",
+    specialization: [], 
+    services: [], 
     description: "",
     city: "",
     state: "",
     totalBeds: "",
-    availableBeds: "",
+    // availableBeds: "",
+    seniorDoctors:"",
+    juniorDoctors: "",
     totalDoctorStaff: "",
     nursingStaff: "",
     timings: [],
@@ -37,6 +40,16 @@ const HospitalRegistrationForm = () => {
     endTime: "",
   });
 
+  const [specialization, setSpecialization] = useState({
+    specialization: "",
+    others : "",
+  });
+
+  const [services, setservices] = useState({
+    services: "",
+    others : "",
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -44,6 +57,13 @@ const HospitalRegistrationForm = () => {
       [name]: value,
     });
   };
+  const handleChange2 = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
 
   const handleTimingSlotChange = (updatedSlots) => {
     setFormData({
@@ -90,6 +110,8 @@ const HospitalRegistrationForm = () => {
     const dataToSubmit = {
       ...formData,
       timings: JSON.stringify(formData.timings), // Ensure timings is a JSON string
+      specialization: formData.specialization, // Send formData.specialization directly
+      services: formData.services,             // Send formData.services directly
     };
 
     try {
@@ -116,6 +138,7 @@ const HospitalRegistrationForm = () => {
         {step === 1 && (
           <Step1
             formData={formData}
+            setFormData={setFormData}
             handleChange={handleChange}
             handleNext={() => setStep(step + 1)}
           />
@@ -124,6 +147,7 @@ const HospitalRegistrationForm = () => {
           <Step2
             formData={formData}
             handleChange={handleChange}
+            handleChange2={handleChange2}
             handleNext={() => setStep(step + 1)}
             handlePrev={() => setStep(step - 1)}
           />
@@ -147,13 +171,10 @@ const HospitalRegistrationForm = () => {
         {step === 5 && (
           <Step5
             formData={formData}
-            handleTimingChange={handleTimingChange}
             handleTimingSlotChange={handleTimingSlotChange}
-            handleAddTimingSlot={handleAddTimingSlot}
-            handleRemoveTimingSlot={handleRemoveTimingSlot}
             handleNext={() => setStep(step + 1)}
             handlePrev={() => setStep(step - 1)}
-            timing={timing}
+            handleChange={handleChange}
           />
         )}
         {step === 6 && (

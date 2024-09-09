@@ -59,6 +59,7 @@ export const registerDoctor = async (req, res) => {
       longitude,
       email,
       timingSlots,
+      description,
       consultancyFees,
     } = req.body;
 
@@ -113,6 +114,7 @@ export const registerDoctor = async (req, res) => {
       latitude,
       longitude,
       email,
+      description,
       timingSlots: JSON.parse(timingSlots || '[]'), // Default to empty array if timingSlots is not provided
       consultancyFees,
       identityProof,

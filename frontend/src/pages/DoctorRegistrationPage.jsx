@@ -27,8 +27,7 @@ const DoctorRegistrationForm = () => {
     registrationCouncil: "",
     otherCouncil:"",
     registrationYear: "",
-    degree: "",
-    otherDegree:"",
+    degree: [],
     college: "",
     otherCollege:"",
     completionYear: "",
@@ -47,6 +46,7 @@ const DoctorRegistrationForm = () => {
     medicalRegistrationProof: null,
     establishmentProof: null,
     timingSlots: [],
+    description: '',
     consultancyFees: "",
   });
 
@@ -127,6 +127,29 @@ const DoctorRegistrationForm = () => {
       timingSlots: [...formData.timingSlots, slot],
     });
   };
+  // handle remove time slotes
+  const handleRemoveTimingSlot = (index) => {
+    const newTimings = [...formData.timings];
+    newTimings.splice(index, 1);
+    setFormData({
+      ...formData,
+      timings: newTimings,
+    });
+  };
+
+  const handleTimingChange = (index, e) => {
+    const { name, value } = e.target;
+    const newTimings = [...formData.timings];
+    newTimings[index] = {
+      ...newTimings[index],
+      [name]: value,
+    };
+    setFormData({
+      ...formData,
+      timings: newTimings,
+    });
+  };
+
 
   const handleNext = () => {
     setStep(step + 1);
@@ -196,6 +219,7 @@ const DoctorRegistrationForm = () => {
         {step === 2 && (
           <Step2
             formData={formData}
+            setFormData={setFormData}
             handleChange={handleChange}
             handleNext={handleNext}
             handlePrev={handlePrev}
@@ -234,11 +258,10 @@ const DoctorRegistrationForm = () => {
         {step === 7 && (
           <Step7
             formData={formData}
-            timingSlot={timingSlot}
             handleTimingSlotChange={handleTimingSlotChange}
-            handleAddTimingSlot={handleAddTimingSlot}
             handleNext={handleNext}
             handlePrev={handlePrev}
+            handleChange={handleChange}
           />
         )}
         {step === 8 && (

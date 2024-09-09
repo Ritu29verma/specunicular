@@ -6,7 +6,8 @@ const daysOfWeek = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
 
-const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => {
+
+const Step7 = ({ formData, handleTimingSlotChange, handleNext, handleChange, handlePrev }) => {
   const [timings, setTimings] = useState(formData.timings || [{
     days: [], 
     morningStart: '', 
@@ -14,12 +15,24 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
     afternoonStart: '', 
     afternoonEnd: ''
   }]);
+
+  
+
   const [selectedDays, setSelectedDays] = useState([]);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     handleTimingSlotChange(timings);
   }, [timings]);
+
+  // const validateForm = () => {
+  //   const newErrors = {}
+  //   if (!formData.description) newErrors.description = 'Description is required.';
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
 
   const handleAddTimingSlot = () => {
     const newErrors = { ...errors }; // Copy existing errors
@@ -224,6 +237,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
                   />
                   {errors[index]?.afternoon && <p className="text-red-500 text-sm">{errors[index].afternoon}</p>}
                   {errors[index]?.afternoonEnd && <p className="text-red-500 text-sm">{errors[index].afternoonEnd}</p>}
+                  
                 </div>
               </div>
 
@@ -250,9 +264,29 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
           </button>
           {errors.selectedDays && <p className="text-red-500 mt-2">{errors.selectedDays}</p>}
         </div> 
+
 </div>
+
+
+<div className='mt-4'>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder=" Description  "
+            value={formData.description}
+            onChange={handleChange}
+            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2`}
+          />
+        </div>
+
+
         <div className="flex mt-8 ">
-       
         <div className="mt-6 flex justify-between w-full max-w-full mx-auto">
           <button
             type="button"
@@ -265,6 +299,7 @@ const Step7 = ({ formData, handleTimingSlotChange, handleNext, handlePrev }) => 
             type="button"
             onClick={handleNext}
             className="bg-docsoGreen text-white px-6 py-2 rounded-md hover:bg-middleGreen transition duration-300"
+
           >
             Next
           </button>

@@ -8,7 +8,7 @@ const doctorSchema = new mongoose.Schema({
   password: { type: String, required: true },
   email: {
     type: String,
-    required: true, // Ensure the email field is required 
+    required: true, 
     lowercase: true,
   },
   hospitalId: { type: String },
@@ -43,17 +43,58 @@ const doctorSchema = new mongoose.Schema({
 const hospitalSchema = new mongoose.Schema({
   hospitalName: { type: String, required: true },
   hospitalImage:{type:String},
-  hospitalId: { type: String, unique: true },
-  category: String,
-  specialization: String,
-  services: String,
-  description: String,
-  city: String,
-  state: String,
-  totalBeds: Number,
-  availableBeds: Number,
-  totalDoctorStaff: Number,
-  nursingStaff: Number,
+  hospitalId: { type: String, unique: true , required: true, },
+  category: {
+    type: String,
+    required: true,
+  },
+  specialization: [{ type: String }], 
+  services: [{ type: String }],  
+  description: {
+    type: String,
+    required: false,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  totalBeds: {
+    type: Number,
+    required: true,
+  },
+  availableBeds: {
+    type: Number,
+    required: false,
+  },
+  seniorDoctors: {
+    type: Number,
+    required: false,
+  },
+  juniorDoctors: {
+    type: Number,
+    required: false,
+  },
+  totalDoctorStaff: {
+    type: Number,
+    required: true,
+  },
+  nursingStaff: {
+    type: Number,
+    required: true,
+  },
+  insuranceClaim: {
+    type: Boolean,
+    required: true,
+  },
+  contactDetails: {
+    type: String,
+    required: true,
+  },
+
   timings: [
     {
       days: [{ type: String, required: true }],
@@ -62,7 +103,6 @@ const hospitalSchema = new mongoose.Schema({
     },
   ],
   insuranceClaim: String,
-  contactDetails: String,
   doctors: [doctorSchema], // Field to store doctor references
 });
 

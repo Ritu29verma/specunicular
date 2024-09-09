@@ -31,7 +31,8 @@ export const registerHospital = async (req, res) => {
       city,
       state,
       totalBeds,
-      availableBeds,
+  juniorDoctors,
+  seniorDoctors,
       totalDoctorStaff,
       nursingStaff,
       timings, // This should be a JSON string
@@ -40,33 +41,35 @@ export const registerHospital = async (req, res) => {
       
     } = req.body;
 
-    const hospitalImage = req.files.hospitalImage
-      ? uploadFile(req.files.hospitalImage, "hospitalImage")
-      : "";
+    // const hospitalImage = req.files.hospitalImage
+    //   ? uploadFile(req.files.hospitalImage, "hospitalImage")
+    //   : "";
 
     console.log("Received timingSlots:", timings);
 
+    const parsedSpecializations = Array.isArray(specialization) ? specialization : [specialization];
+  const parsedServices = Array.isArray(services) ? services : [services];
+
     const hospital = new Hospital({
       hospitalName,
-      hospitalImage,
+      // hospitalImage,
       hospitalId,
       category,
-      specialization,
-      services,
+      specialization: parsedSpecializations, 
+      services: parsedServices, 
       description,
       city,
       state,
       totalBeds,
-      availableBeds,
       totalDoctorStaff,
       nursingStaff,
+      juniorDoctors,
+  seniorDoctors,
       timings: JSON.parse(timings), // Parse the JSON string into an object
       insuranceClaim,
       contactDetails,
       doctors:[]
     });
-
-  
     await hospital.save();
 
 

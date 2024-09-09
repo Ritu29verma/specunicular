@@ -11,12 +11,8 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrev }) => {
     if (!formData.totalBeds) {
       newErrors.totalBeds = 'Total Beds is required.';
     }
-    if (formData.availableBeds === undefined || formData.availableBeds === '') {
-      newErrors.availableBeds = 'Available Beds is required.';
-    }
-    
-    // if (formData.availableBeds > formData.totalBeds) {
-    //   newErrors.availableBeds = 'Available Beds cannot be greater than Total Beds.';
+    // if (formData.juniorDoctors > formData.totalBeds) {
+    //   newErrors.juniorDoctors = 'Available Beds cannot be greater than Total Beds.';
     // }
     
     setErrors(newErrors);
@@ -52,21 +48,40 @@ const Step3 = ({ formData, handleChange, handleNext, handlePrev }) => {
             {errors.totalBeds && <p className="text-red-500 text-sm mt-1">{errors.totalBeds}</p>}
           </div>
 
+
           <div className="mb-6">
-            <label htmlFor="availableBeds" className="block text-docsoGreen font-semibold mb-2">Available Beds</label>
+            <label htmlFor="seniorDoctors" className="block text-docsoGreen font-semibold mb-2">Total Senior Doctors</label>
             <input
               type="number"
-              id="availableBeds"
-              name="availableBeds"
-              placeholder="Enter available beds"
-              value={formData.availableBeds || ''}
+              id="seniorDoctors"
+              name="seniorDoctors"
+              placeholder="Enter total senior doctors"
+              value={formData.seniorDoctors || ''}
               onChange={handleChange}
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.availableBeds ? 'border-red-500 focus:ring-red-500' : 'border-middleGreen focus:ring-middleGreen'
+                errors.seniorDoctors ? 'border-red-500 focus:ring-red-500' : 'border-middleGreen focus:ring-middleGreen'
               }`}
               required
             />
-            {errors.availableBeds && <p className="text-red-500 text-sm mt-1">{errors.availableBeds}</p>}
+            {errors.seniorDoctors && <p className="text-red-500 text-sm mt-1">{errors.seniorDoctors}</p>}
+          </div>
+
+
+          <div className="mb-6">
+            <label htmlFor="juniorDoctors" className="block text-docsoGreen font-semibold mb-2">Total Junior Doctors</label>
+            <input
+              type="number"
+              id="juniorDoctors"
+              name="juniorDoctors"
+              placeholder="Enter total junior doctors"
+              value={formData.juniorDoctors || ''}
+              onChange={handleChange}
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.juniorDoctors ? 'border-red-500 focus:ring-red-500' : 'border-middleGreen focus:ring-middleGreen'
+              }`}
+              required
+            />
+            {errors.juniorDoctors && <p className="text-red-500 text-sm mt-1">{errors.juniorDoctors}</p>}
           </div>
         </div>
 
